@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORFK - BTK & Regiszter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Animált háttér effektek -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
+    <header class="navbar">
+        <div class="logo">
+            <span class="badge">ORFK</span>
+            <span class="divider">|</span>
+            <span class="server-name">SunRise RP</span>
+        </div>
+        <nav>
+            <a href="#btk" class="nav-link active"><i class="fas fa-book"></i> BTK Search</a>
+            <a href="#register" class="nav-link"><i class="fas fa-id-card"></i> Körözések</a>
+            <a href="#stats" class="nav-link"><i class="fas fa-chart-line"></i> Statisztika</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1 class="glow-title">Országos Rendőr-főkapitányság</h1>
+            <p class="subtitle">Büntető Törvénykönyv és Intelligens Adatbázis Rendszer</p>
+        </section>
+
+        <!-- Kereső és Szűrő Szekció -->
+        <section class="search-section">
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Keresés cikk, tényállás vagy bűncselekmény alapján...">
+            </div>
+            <div class="filter-tags">
+                <button class="filter-btn active" data-filter="all">Összes</button>
+                <button class="filter-btn" data-filter="könnyű">Könnyű Vétség</button>
+                <button class="filter-btn" data-filter="súlyos">Súlyos Bűncselekmény</button>
+
+            </div>
+        </section>
+
+        <!-- Statisztikai Kártyák -->
+        <section class="stats-grid" id="stats">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-gavel"></i></div>
+                <div class="stat-info">
+                    <h3>BTK Cikkelyek</h3>
+                    <p class="stat-number">124</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warning"><i class="fas fa-user-ninja"></i></div>
+                <div class="stat-info">
+                    <h3>Aktív Körözések</h3>
+                    <p class="stat-number">18</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon success"><i class="fas fa-shield-alt"></i></div>
+                <div class="stat-info">
+                    <h3>Szolgálatban</h3>
+                    <p class="stat-number">12 Fő</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
