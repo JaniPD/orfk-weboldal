@@ -4,9 +4,290 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORFK - BTK & Regiszter</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Betűtípus és Ikonok (Működő, nyilvános CDN) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-glow: rgba(0, 102, 255, 0.4);
+            --accent: #ffaa00;
+            --accent-glow: rgba(255, 170, 0, 0.3);
+            --bg-dark: #0a0e17;
+            --card-bg: rgba(18, 26, 43, 0.75);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animált Háttér Fények */
+        .bg-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .glow-1 {
+            top: -100px;
+            left: -100px;
+            background: var(--primary-glow);
+        }
+
+        .glow-2 {
+            bottom: -100px;
+            right: -100px;
+            background: var(--accent-glow);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            100% { transform: scale(1.2) translate(30px, 20px); opacity: 0.7; }
+        }
+
+        /* Header & Navigáció */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #0066ff, #0044aa);
+            padding: 4px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 12px var(--primary-glow);
+            color: #fff;
+        }
+
+        .divider {
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .server-name {
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 10px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Főtartalom */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .glow-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #ffffff, #a5c7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Keresőmező */
+        .search-section {
+            margin-bottom: 3rem;
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            color: #fff;
+            font-size: 1rem;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .filter-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        /* Statisztikai Kártyák */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: rgba(0, 102, 255, 0.15);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .stat-icon.warning {
+            background: rgba(255, 170, 0, 0.15);
+            color: var(--accent);
+        }
+
+        .stat-icon.success {
+            background: rgba(0, 200, 83, 0.15);
+            color: #00c853;
+        }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
     <!-- Animált háttér effektek -->
@@ -20,9 +301,9 @@
             <span class="server-name">SunRise RP</span>
         </div>
         <nav>
-            <a href="#btk" class="nav-link active"><i class="fas fa-book"></i> BTK Search</a>
-            <a href="#register" class="nav-link"><i class="fas fa-id-card"></i> Körözések</a>
-            <a href="#stats" class="nav-link"><i class="fas fa-chart-line"></i> Statisztika</a>
+            <a href="#btk" class="nav-link active"><i class="fa-solid fa-book"></i> BTK Search</a>
+            <a href="#register" class="nav-link"><i class="fa-solid fa-id-card"></i> Körözések</a>
+            <a href="#stats" class="nav-link"><i class="fa-solid fa-chart-line"></i> Statisztika</a>
         </nav>
     </header>
 
@@ -35,35 +316,34 @@
         <!-- Kereső és Szűrő Szekció -->
         <section class="search-section">
             <div class="search-bar">
-                <i class="fas fa-search search-icon"></i>
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" id="searchInput" placeholder="Keresés cikk, tényállás vagy bűncselekmény alapján...">
             </div>
             <div class="filter-tags">
-                <button class="filter-btn active" data-filter="all">Összes</button>
-                <button class="filter-btn" data-filter="könnyű">Könnyű Vétség</button>
-                <button class="filter-btn" data-filter="súlyos">Súlyos Bűncselekmény</button>
-
+                <button class="filter-btn active">Összes</button>
+                <button class="filter-btn">Könnyű Vétség</button>
+                <button class="filter-btn">Súlyos Bűncselekmény</button>
             </div>
         </section>
 
         <!-- Statisztikai Kártyák -->
         <section class="stats-grid" id="stats">
             <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-gavel"></i></div>
+                <div class="stat-icon"><i class="fa-solid fa-gavel"></i></div>
                 <div class="stat-info">
                     <h3>BTK Cikkelyek</h3>
                     <p class="stat-number">124</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon warning"><i class="fas fa-user-ninja"></i></div>
+                <div class="stat-icon warning"><i class="fa-solid fa-user-ninja"></i></div>
                 <div class="stat-info">
                     <h3>Aktív Körözések</h3>
                     <p class="stat-number">18</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon success"><i class="fas fa-shield-alt"></i></div>
+                <div class="stat-icon success"><i class="fa-solid fa-shield-halved"></i></div>
                 <div class="stat-info">
                     <h3>Szolgálatban</h3>
                     <p class="stat-number">12 Fő</p>
