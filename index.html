@@ -3,355 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORFK // Tactical CAD System</title>
+    <title>ORFK // Command Terminal</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap');
 
         :root {
-            --bg-void: #050811;
-            --panel-bg: rgba(10, 16, 30, 0.85);
-            --neon-blue: #00f0ff;
-            --neon-gold: #ffb703;
-            --neon-red: #ff2a6d;
-            --text-dim: #4e618d;
-            --text-bright: #e2e8f0;
-            --border-glow: rgba(0, 240, 255, 0.2);
+            --bg-dark: #070a12;
+            --panel-bg: rgba(13, 20, 36, 0.9);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --accent-amber: #f59e0b;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', sans-serif;
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-void);
-            color: var(--text-bright);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image: 
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
         }
 
-        /* TOP HUD BAR */
-        .hud-header {
-            background: rgba(5, 8, 17, 0.95);
-            border-bottom: 2px solid var(--neon-blue);
-            padding: 1rem 2rem;
+        /* HEADER */
+        header {
+            background: rgba(7, 10, 18, 0.95);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
         }
 
-        .sys-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #fff;
+        .brand {
             display: flex;
             align-items: center;
             gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
-        .sys-title span {
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        .hud-status {
-            display: flex;
-            gap: 20px;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        .status-val {
-            color: var(--neon-gold);
-            font-weight: 600;
-        }
-
-        /* MAIN HUD LAYOUT */
-        .hud-grid {
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 20px;
-            padding: 20px;
-            flex: 1;
-            max-width: 1800px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* LEFT: TACTICAL MATRIX */
-        .matrix-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-glow);
+        .brand-badge {
+            background: var(--accent-amber);
+            color: #000;
+            padding: 2px 6px;
             border-radius: 4px;
-            padding: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* HÁROMOSZLOPOS GRID */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr 380px;
+            gap: 15px;
+            padding: 15px;
+            flex: 1;
+            height: calc(100vh - 60px);
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(10px);
-            position: relative;
+            overflow: hidden;
         }
 
-        .matrix-panel::before {
-            content: "TAC_MATRIX // BTK_DATABASE";
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--bg-void);
-            padding: 0 10px;
-            font-size: 0.7rem;
-            color: var(--neon-blue);
-            letter-spacing: 2px;
-            border: 1px solid var(--border-glow);
-        }
-
-        .filter-bar {
+        .panel-header {
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--panel-border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-amber);
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            margin-top: 10px;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .search-hud {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--border-glow);
-            padding: 12px 16px;
-            color: var(--neon-blue);
-            font-size: 0.9rem;
+        /* BAL OSZLOP: NAVIGÁCIÓ & SZŰRŐK */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 10px;
+        }
+
+        .nav-item {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 12px;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-amber);
+        }
+
+        /* KÖZÉPSŐ OSZLOP: ADATBÁZIS MÁTRIX */
+        .search-box {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.85rem;
             outline: none;
         }
 
-        .search-hud:focus {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        .search-input:focus {
+            border-color: var(--accent-amber);
         }
 
-        .cat-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .tab-btn {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            color: var(--text-dim);
-            padding: 8px 14px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--neon-blue);
-            color: var(--bg-void);
-            font-weight: 800;
-            box-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        .crime-list {
+        .matrix-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+            padding: 15px;
             overflow-y: auto;
-            max-height: calc(100vh - 260px);
-            padding-right: 5px;
         }
 
-        .crime-card {
-            background: rgba(5, 12, 25, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 14px;
+        .btk-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 6px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.2s;
-            position: relative;
         }
 
-        .crime-card:hover {
-            border-color: var(--neon-blue);
-            transform: translateX(4px);
-            background: rgba(0, 240, 255, 0.08);
+        .btk-card:hover {
+            border-color: var(--accent-amber);
+            background: rgba(245, 158, 11, 0.04);
         }
 
-        .crime-code {
-            font-size: 0.7rem;
-            color: var(--neon-gold);
+        .btk-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-amber);
             margin-bottom: 4px;
         }
 
-        .crime-title {
-            font-size: 0.88rem;
+        .btk-title {
+            font-size: 0.85rem;
             font-weight: 600;
-            color: #fff;
             margin-bottom: 8px;
         }
 
-        .crime-stats {
+        .btk-meta {
             display: flex;
             justify-content: space-between;
             font-size: 0.75rem;
-            color: var(--text-dim);
+            color: var(--text-muted);
         }
 
-        /* RIGHT: MDC FEED / DOCKET */
-        .docket-panel {
-            background: var(--panel-bg);
-            border: 1px solid rgba(255, 183, 3, 0.3);
-            border-radius: 4px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .docket-panel::before {
-            content: "ACTIVE_ARREST_LOG // MDC_FEED";
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--bg-void);
-            padding: 0 10px;
-            font-size: 0.7rem;
-            color: var(--neon-gold);
-            letter-spacing: 2px;
-            border: 1px solid rgba(255, 183, 3, 0.3);
-        }
-
-        .docket-items {
+        /* JOBB OSZLOP: ELJÁRÁSI LAP */
+        .docket-content {
             flex: 1;
+            padding: 12px;
             overflow-y: auto;
-            margin: 15px 0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 400px;
+            gap: 8px;
         }
 
-        .docket-row {
-            background: rgba(0, 0, 0, 0.5);
-            border-left: 3px solid var(--neon-blue);
-            padding: 10px 12px;
+        .docket-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            border-left: 3px solid var(--accent-amber);
+            padding: 8px 10px;
+            border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.8rem;
         }
 
-        .btn-remove {
-            color: var(--neon-red);
-            background: none;
-            border: none;
+        .mod-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            padding: 10px;
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .btn-mod {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            color: var(--text-muted);
+            padding: 6px;
+            font-size: 0.7rem;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .docket-summary {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--border-glow);
+        .btn-mod.active {
+            background: var(--accent-amber);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .summary-box {
             padding: 15px;
-            margin-top: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid var(--panel-border);
         }
 
-        .sum-line {
+        .sum-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            margin-bottom: 6px;
             font-size: 0.85rem;
         }
 
-        .sum-val {
-            font-family: 'Orbitron', sans-serif;
+        .val-fine {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: #22c55e;
             font-weight: 700;
-            font-size: 1.2rem;
         }
 
-        .btn-action-hud {
+        .val-jail {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .btn-export {
             width: 100%;
-            padding: 14px;
-            background: var(--neon-blue);
-            color: var(--bg-void);
+            background: var(--accent-amber);
+            color: #000;
             border: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            letter-spacing: 2px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
             cursor: pointer;
             margin-top: 10px;
-            transition: all 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .btn-action-hud:hover {
-            box-shadow: 0 0 20px var(--neon-blue);
-            transform: scale(1.02);
+        .btn-export:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
 
-    <div class="hud-header">
-        <div class="sys-title">
-            <span>//</span> ORFK_TAC_CAD <span>v4.0</span>
+    <header>
+        <div class="brand">
+            <span class="brand-badge">ORFK</span> COMMAND TERMINAL v2.5
         </div>
-        <div class="hud-status">
-            <div>STATUS: <span class="status-val">CONNECTED</span></div>
-            <div>ENC: <span class="status-val">AES-256</span></div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);">
+            OPERATOR: <span style="color: #fff;">AKTÍV JÁRŐR</span>
         </div>
-    </div>
+    </header>
 
-    <div class="hud-grid">
-        <!-- BAL OSZLOP: DATABASE -->
-        <div class="matrix-panel">
-            <div class="filter-bar">
-                <input type="text" id="hudSearch" class="search-hud" placeholder="> VÁDPONT VAGY KÓD KERESÉSE..." oninput="renderCrimes()">
+    <div class="main-layout">
+        <!-- BAL OSZLOP -->
+        <div class="panel">
+            <div class="panel-header">KATEGÓRIÁK</div>
+            <div class="nav-list">
+                <button class="nav-item active" onclick="filterCat('ALL', this)">Összes Vádpont</button>
+                <button class="nav-item" onclick="filterCat('KÖZLEKEDÉS', this)">Közlekedési Vétkek</button>
+                <button class="nav-item" onclick="filterCat('HATÓSÁG', this)">Hatósági Ügyek</button>
+                <button class="nav-item" onclick="filterCat('KÖZREND', this)">Közrend & Bűnözés</button>
+                <button class="nav-item" onclick="filterCat('SZEMÉLY', this)">Személy & Vagyon</button>
             </div>
+        </div>
 
-            <div class="cat-tabs">
-                <button class="tab-btn active" onclick="setCategory('ALL', this)">ÖSSZES</button>
-                <button class="tab-btn" onclick="setCategory('KÖZLEKEDÉS', this)">KÖZLEKEDÉS</button>
-                <button class="tab-btn" onclick="setCategory('HATÓSÁG', this)">HATÓSÁG</button>
-                <button class="tab-btn" onclick="setCategory('KÖZREND', this)">KÖZREND</button>
-                <button class="tab-btn" onclick="setCategory('SZEMÉLY/VAGYON', this)">SZEMÉLY/VAGYON</button>
+        <!-- KÖZÉPSŐ OSZLOP -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>BTK ADATBÁZIS</span>
+                <span id="cardCount" style="color: var(--text-muted);">0 tétel</span>
             </div>
-
-            <div class="crime-list" id="crimeContainer">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Gyorskeresés kód vagy név alapján..." oninput="renderCards()">
+            </div>
+            <div class="matrix-grid" id="matrixGrid">
                 <!-- JavaScript tölti fel -->
             </div>
         </div>
 
-        <!-- JOBB OSZLOP: MDC DOCKET -->
-        <div class="docket-panel">
-            <div class="docket-items" id="docketContainer">
-                <div style="text-align: center; color: var(--text-dim); margin: auto;">NINCS KIVÁLASZTOTT VÁDPONT</div>
+        <!-- JOBB OSZLOP -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>ELJÁRÁSI JEGYZŐKÖNYV</span>
+                <button onclick="clearDocket()" style="background:none; border:none; color:var(--accent-red); cursor:pointer; font-size:0.75rem;">Kiürítés</button>
+            </div>
+            
+            <div class="docket-content" id="docketContent">
+                <div style="margin: auto; color: var(--text-muted); font-size: 0.8rem;">Nincs intézkedés alá vont vádpont.</div>
             </div>
 
-            <div class="docket-summary">
-                <div class="sum-line">
-                    <span>BÍRSÁG ÖSSZESEN:</span>
-                    <span class="sum-val" style="color: var(--neon-gold);" id="totalFine">0 FT</span>
+            <div class="mod-bar">
+                <button class="btn-mod" onclick="setMod(0.75, this)">-25% ENYH.</button>
+                <button class="btn-mod active" onclick="setMod(1, this)">ALAPÉRTÉK</button>
+                <button class="btn-mod" onclick="setMod(1.5, this)">+50% SÚLY.</button>
+            </div>
+
+            <div class="summary-box">
+                <div class="sum-row">
+                    <span>Pénzbírság:</span>
+                    <span class="val-fine" id="dispFine">0 Ft</span>
                 </div>
-                <div class="sum-line">
-                    <span>BÖRTÖN ÖSSZESEN:</span>
-                    <span class="sum-val" style="color: var(--neon-red);" id="totalJail">0 PERC</span>
+                <div class="sum-row">
+                    <span>Szabadságvesztés:</span>
+                    <span class="val-jail" id="dispJail">0 perc</span>
                 </div>
-                <button class="btn-action-hud" onclick="exportDocket()">MDC LOG GENERÁLÁSA</button>
+                <button class="btn-export" onclick="copyLog()">JEGYZŐKÖNYV MÁSOLÁSA</button>
             </div>
         </div>
     </div>
 
     <script>
-        const database = [
+        const btkDb = [
             { code: "§1.1", title: "Tilosban parkolás", fine: 30000, jail: 0, cat: "KÖZLEKEDÉS" },
             { code: "§1.3", title: "Súlyos sebességtúllépás", fine: 90000, jail: 0, cat: "KÖZLEKEDÉS" },
             { code: "§1.20", title: "Menekülés járművel", fine: 150000, jail: 20, cat: "KÖZLEKEDÉS" },
@@ -360,102 +355,124 @@
             { code: "§3.1", title: "Garázdaság", fine: 120000, jail: 15, cat: "KÖZREND" },
             { code: "§3.6", title: "Illegális fegyverbirtoklás (Nehéz)", fine: 350000, jail: 40, cat: "KÖZREND" },
             { code: "§3.9", title: "Kábítószer kereskedelem", fine: 300000, jail: 35, cat: "KÖZREND" },
-            { code: "§4.7", title: "Emberölés / Gyilkosság", fine: 500000, jail: 60, cat: "SZEMÉLY/VAGYON" },
-            { code: "§4.9", title: "Emberrablás", fine: 450000, jail: 50, cat: "SZEMÉLY/VAGYON" },
-            { code: "§5.11", title: "Bankrablás", fine: 450000, jail: 40, cat: "SZEMÉLY/VAGYON" }
+            { code: "§4.7", title: "Emberölés", fine: 500000, jail: 60, cat: "SZEMÉLY" },
+            { code: "§4.9", title: "Emberrablás", fine: 450000, jail: 50, cat: "SZEMÉLY" },
+            { code: "§5.11", title: "Bankrablás", fine: 450000, jail: 40, cat: "SZEMÉLY" }
         ];
 
-        let activeCategory = 'ALL';
+        let selectedCat = 'ALL';
         let docket = [];
+        let multiplier = 1;
 
-        function setCategory(cat, btn) {
-            activeCategory = cat;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        function filterCat(cat, btn) {
+            selectedCat = cat;
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderCrimes();
+            renderCards();
         }
 
-        function renderCrimes() {
-            const search = document.getElementById('hudSearch').value.toLowerCase();
-            const container = document.getElementById('crimeContainer');
-            container.innerHTML = '';
+        function renderCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const grid = document.getElementById('matrixGrid');
+            grid.innerHTML = '';
 
-            database.filter(item => {
-                const matchCat = activeCategory === 'ALL' || item.cat === activeCategory;
-                const matchSearch = item.title.toLowerCase().includes(search) || item.code.toLowerCase().includes(search);
-                return matchCat && matchSearch;
-            }).forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'crime-card';
-                div.onclick = () => addToDocket(item);
-                div.innerHTML = `
-                    <div class="crime-code">${item.code} // ${item.cat}</div>
-                    <div class="crime-title">${item.title}</div>
-                    <div class="crime-stats">
-                        <span>💰 ${item.fine.toLocaleString()} FT</span>
-                        <span>🔒 ${item.jail} PERC</span>
+            const filtered = btkDb.filter(i => {
+                const matchCat = selectedCat === 'ALL' || i.cat === selectedCat;
+                const matchQuery = i.title.toLowerCase().includes(query) || i.code.toLowerCase().includes(query);
+                return matchCat && matchQuery;
+            });
+
+            document.getElementById('cardCount').innerText = `${filtered.length} tétel`;
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'btk-card';
+                card.onclick = () => addItem(item);
+                card.innerHTML = `
+                    <div class="btk-code">${item.code}</div>
+                    <div class="btk-title">${item.title}</div>
+                    <div class="btk-meta">
+                        <span>${item.fine.toLocaleString()} Ft</span>
+                        <span>${item.jail} perc</span>
                     </div>
                 `;
-                container.appendChild(div);
+                grid.appendChild(card);
             });
         }
 
-        function addToDocket(item) {
+        function addItem(item) {
             docket.push({ ...item, id: Date.now() + Math.random() });
             renderDocket();
         }
 
-        function removeFromDocket(id) {
+        function removeItem(id) {
             docket = docket.filter(i => i.id !== id);
             renderDocket();
         }
 
+        function clearDocket() {
+            docket = [];
+            renderDocket();
+        }
+
+        function setMod(m, btn) {
+            multiplier = m;
+            document.querySelectorAll('.btn-mod').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderDocket();
+        }
+
         function renderDocket() {
-            const container = document.getElementById('docketContainer');
+            const container = document.getElementById('docketContent');
             container.innerHTML = '';
 
             if (docket.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: var(--text-dim); margin: auto;">NINCS KIVÁLASZTOTT VÁDPONT</div>';
+                container.innerHTML = '<div style="margin: auto; color: var(--text-muted); font-size: 0.8rem;">Nincs intézkedés alá vont vádpont.</div>';
                 updateTotals(0, 0);
                 return;
             }
 
-            let fine = 0, jail = 0;
+            let totalFine = 0;
+            let totalJail = 0;
 
             docket.forEach(item => {
-                fine += item.fine;
-                jail += item.jail;
+                const f = Math.round(item.fine * multiplier);
+                const j = Math.round(item.jail * multiplier);
+                totalFine += f;
+                totalJail += j;
 
-                const div = document.createElement('div');
-                div.className = 'docket-row';
-                div.innerHTML = `
+                const row = document.createElement('div');
+                row.className = 'docket-item';
+                row.innerHTML = `
                     <div>
-                        <div style="font-size: 0.8rem; color: #fff;">${item.code} ${item.title}</div>
-                        <div style="font-size: 0.7rem; color: var(--text-dim);">${item.fine.toLocaleString()} FT | ${item.jail} MIN</div>
+                        <div style="font-weight:600;">${item.code} ${item.title}</div>
+                        <div style="color:var(--text-muted); font-size:0.75rem;">${f.toLocaleString()} Ft | ${j} perc</div>
                     </div>
-                    <button class="btn-remove" onclick="removeFromDocket(${item.id})">✖</button>
+                    <button onclick="removeItem(${item.id})" style="background:none; border:none; color:var(--accent-red); cursor:pointer;">✖</button>
                 `;
-                container.appendChild(div);
+                container.appendChild(row);
             });
 
-            updateTotals(fine, jail);
+            updateTotals(totalFine, totalJail);
         }
 
-        function updateTotals(fine, jail) {
-            document.getElementById('totalFine').innerText = fine.toLocaleString() + ' FT';
-            document.getElementById('totalJail').innerText = jail + ' PERC';
+        function updateTotals(f, j) {
+            document.getElementById('dispFine').innerText = f.toLocaleString() + ' Ft';
+            document.getElementById('dispJail').innerText = j + ' perc';
         }
 
-        function exportDocket() {
+        function copyLog() {
             if (docket.length === 0) return;
-            let log = `=== ORFK TAC LOG ===\nVÁDCSOMAG:\n`;
-            docket.forEach(i => log += `> ${i.code} ${i.title}\n`);
-            log += `-------------------\nÖSSZESEN: ${document.getElementById('totalFine').innerText} / ${document.getElementById('totalJail').innerText}`;
-            navigator.clipboard.writeText(log);
-            alert("MDC LOG MÁSOLVA A VÁGÓLAPRA!");
+            let txt = "--- ORFK JEGYZŐKÖNYV ---\n";
+            docket.forEach(i => {
+                txt += `• ${i.code} ${i.title}\n`;
+            });
+            txt += `\nBírság: ${document.getElementById('dispFine').innerText}\nBörtön: ${document.getElementById('dispJail').innerText}`;
+            navigator.clipboard.writeText(txt);
+            alert("Jegyzőkönyv kimásolva!");
         }
 
-        renderCrimes();
+        renderCards();
     </script>
 </body>
 </html>
