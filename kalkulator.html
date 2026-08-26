@@ -37,13 +37,15 @@ const money=n=>new Intl.NumberFormat('hu-HU').format(Number(n)||0)+' Ft';
 const minutes=n=>{n=Math.max(0,Number(n)||0);const h=Math.floor(n/60),m=n%60;return h?`${h} óra${m?' '+m+' perc':''}`:`${m} perc`};
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
 function normalize(raw){
-  // Supports both a normal JSON object and a JSON-string containing the object.
+  // The current btk.json is wrapped by the GitHub file writer as {content:"..."}.
+  // Unwrap that string first, then accept the actual {items:[...]} structure.
   let data=raw;
+  if(data && typeof data.content==='string') data=data.content;
   if(typeof data==='string') data=JSON.parse(data);
   if(Array.isArray(data)) return data;
   if(data&&Array.isArray(data.items)) return data.items;
   if(data&&data.data&&Array.isArray(data.data.items)) return data.data.items;
-  throw new Error('A btk.json nem tartalmaz items tömböt.');
+  throw new Error('A btk.json nem tartalmaz érvényes items tömböt.');
 }
 async function load(){
   const status=$('loadStatus');
