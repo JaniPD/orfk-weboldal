@@ -215,39 +215,7 @@
         .card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
         .card p { color: var(--text-muted); font-size: 0.9rem; }
 
-        /* ÚJ: Statisztikai Panel */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 4rem;
-        }
-
-        .stat-card {
-            background: rgba(13, 22, 41, 0.8);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 1.5rem;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-        .stat-card:hover { transform: translateY(-4px); }
-        .stat-card-number {
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-        }
-        .stat-card-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        /* ÚJ: Ranglétra Panel */
+        /* Ranglétra Panel */
         .ranks-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -270,7 +238,70 @@
         .rank-title { font-weight: 800; font-size: 1.05rem; color: #fff; }
         .rank-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
 
-        /* BTK Kalkulátor frissített animációkkal */
+        /* ÚJ PANEL: Szabályzat kártyák */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .rule-card {
+            background: rgba(13, 22, 41, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .rule-card h3 {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rule-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .rule-card li {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .rule-card li::before {
+            content: "•";
+            color: var(--accent-blue);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* ÚJ PANEL: Körzetek / Zónák */
+        .zone-card {
+            background: linear-gradient(145deg, rgba(13, 22, 41, 0.9), rgba(5, 8, 17, 0.9));
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .zone-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+        }
+        .zone-badge {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+        }
+
+        /* BTK Kalkulátor */
         .calc-box {
             background: rgba(13, 22, 41, 0.85);
             border: 1px solid var(--card-border);
@@ -303,23 +334,6 @@
             background: var(--accent-blue);
             color: white;
             transform: translateY(-2px);
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
-            background: var(--bg-dark);
-            color: white;
-            margin-bottom: 1rem;
-            outline: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-        .search-box:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
         }
 
         .calc-select {
@@ -512,6 +526,7 @@
         <a href="#" class="logo">🚔 ORFK | <span>SunRise RP</span></a>
         <nav>
             <a href="#about">Rólunk</a>
+            <a href="#rules">Szabályzat</a>
             <a href="#ranks">Rangok</a>
             <a href="#divisions">Alosztályok</a>
             <a href="#calculator">Kalkulátor</a>
@@ -532,26 +547,6 @@
     </div>
 
     <div class="container">
-
-        <!-- Élő Statisztikák Panel -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-card-number">24/7</div>
-                <div class="stat-card-label">Aktív Járőrszolgálat</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-number">1,400+</div>
-                <div class="stat-card-label">Elfogott Körözött</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-number">98%</div>
-                <div class="stat-card-label">Hívási Reagálás</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-number">100%</div>
-                <div class="stat-card-label">Összetartó RP Közösség</div>
-            </div>
-        </div>
 
         <!-- Rólunk -->
         <section id="about">
@@ -579,7 +574,42 @@
             </div>
         </section>
 
-        <!-- ÚJ: Ranglétra Panel -->
+        <!-- ÚJ PANEL 1: Szolgálati Kódex & Alapszabályok -->
+        <section id="rules">
+            <div class="section-title">
+                <h2>Szolgálati Irányelvek</h2>
+                <p>A professzionális és etikus rendőri intézkedések alapszabályai.</p>
+            </div>
+
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <h3>📻 Rádióforgalmazási Etikett</h3>
+                    <ul>
+                        <li>Rövid, pontos és lényegretörő rádiózás (10-es kódok használata).</li>
+                        <li>Saját egység és pozíció megadása minden üldözésnél.</li>
+                        <li>Felesleges beszéd és beszólás szigorúan tilos az eljárások alatt.</li>
+                    </ul>
+                </div>
+                <div class="rule-card">
+                    <h3>🔫 Fegyverhasználati Protokoll</h3>
+                    <ul>
+                        <li>Fegyvertelen gyanúsítottal szemben csak kényszerítő eszköz alkalmazható.</li>
+                        <li>Éles fegyvert kizárólag közvetlen életveszély esetén szabad használni.</li>
+                        <li>Figyelmeztető lövés kötelező, ha a szituáció engedi.</li>
+                    </ul>
+                </div>
+                <div class="rule-card">
+                    <h3>⚖️ Intézkedési Kötelezettségek</h3>
+                    <ul>
+                        <li>Jogok ismertetése minden őrizetbe vételkor kötelező.</li>
+                        <li>BTK tételek pontos kiszabása (a kalkulátor alapján).</li>
+                        <li>Tisztelettudó és határozott fellépés a civil lakossággal szemben.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ranglétra Panel -->
         <section id="ranks">
             <div class="section-title">
                 <h2>Szolgálati Ranglétra</h2>
@@ -602,6 +632,32 @@
                 <div class="rank-card">
                     <div class="rank-title">Tisztikar (Hadnagy+)</div>
                     <div class="rank-desc">Akciók szervezése, frakcióvezetés és a teljes szervezet felügyelete.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÚJ PANEL 2: Rendőri Körzetek / Zónák -->
+        <section id="zones">
+            <div class="section-title">
+                <h2>Járőrövezetek & Felelősségi Területek</h2>
+                <p>A város legfőbb körzetei és azok prioritási szintjei.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="zone-card">
+                    <span class="zone-badge">Kiemelt Prioritás</span>
+                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🌆 Belváros & Banknegyed</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">Sűrűn lakott terület, boltrablások és pénzintézeti riasztások fő helyszíne. Gyors reagálású járőröket igényel.</p>
+                </div>
+                <div class="zone-card">
+                    <span class="zone-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold);">Fokozott Ellenőrzés</span>
+                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🏭 Ipari & Kikötői Zóna</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">Tiltott áruk és illegális tevékenységek felderítése. Nyomozati és BEU/TEK jelenlétre fókuszál.</p>
+                </div>
+                <div class="zone-card">
+                    <span class="zone-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue);">Közúti Ellenőrzés</span>
+                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🛣️ Autópályák & Kivezető Utak</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">Nagy sebességű elfogások, trafipax mérések és körözött járművek kiszűrése az államközi utakon.</p>
                 </div>
             </div>
         </section>
@@ -641,7 +697,7 @@
         <section id="calculator">
             <div class="section-title">
                 <h2>Interaktív BTK Kalkulátor</h2>
-                <p>Keresd meg a vádakat vagy használd a gyorsgombokat a bírság és börtönidő kiszámításához.</p>
+                <p>Keresd meg a vádakat a listából vagy használd a gyorsgombokat a bírság és börtönidő kiszámításához.</p>
             </div>
 
             <div class="calc-box">
@@ -653,9 +709,6 @@
                     <button class="preset-btn" onclick="addPreset('§5.11 Bankrablás')">+ Bankrablás</button>
                     <button class="preset-btn" onclick="addPreset('§4.9 Emberrablás')">+ Emberrablás</button>
                 </div>
-
-                <!-- Keresőmező -->
-                <input type="text" id="calcSearch" class="search-box" placeholder="🔍 Keresés a BTK tételek között (pl. rablás, menekülés)..." oninput="filterOptions()">
 
                 <select id="btkSelect" class="calc-select" onchange="addBtkItem(this)">
                     <option value="" disabled selected>-- Válassz a TELJES BTK listából --</option>
@@ -866,29 +919,6 @@
             element.classList.remove('pulse');
             void element.offsetWidth;
             element.classList.add('pulse');
-        }
-
-        function filterOptions() {
-            const input = document.getElementById('calcSearch').value.toLowerCase().trim();
-            const select = document.getElementById('btkSelect');
-            const groups = select.getElementsByTagName('optgroup');
-
-            for (let i = 0; i < groups.length; i++) {
-                const options = groups[i].getElementsByTagName('option');
-                let hasVisible = false;
-
-                for (let j = 0; j < options.length; j++) {
-                    const txt = options[j].text.toLowerCase();
-                    if (input === "" || txt.includes(input)) {
-                        options[j].style.display = "";
-                        hasVisible = true;
-                    } else {
-                        options[j].style.display = "none";
-                    }
-                }
-
-                groups[i].style.display = hasVisible ? "" : "none";
-            }
         }
 
         function copyReport() {
