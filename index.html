@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORFK // Command Terminal</title>
+    <title>ORFK // CYBER-HUD TERMINAL v3.0</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
 
         :root {
-            --bg-dark: #070a12;
-            --panel-bg: rgba(13, 20, 36, 0.9);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --accent-amber: #f59e0b;
-            --accent-blue: #3b82f6;
-            --accent-red: #ef4444;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-dark: #030712;
+            --panel-bg: rgba(10, 15, 29, 0.85);
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff0055;
+            --neon-amber: #ffb703;
+            --border-line: rgba(0, 240, 255, 0.25);
+            --text-main: #e2e8f0;
+            --text-dim: #64748b;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Rajdhani', sans-serif;
             user-select: none;
         }
 
@@ -32,380 +32,339 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* HEADER */
-        header {
-            background: rgba(7, 10, 18, 0.95);
-            border-bottom: 1px solid var(--panel-border);
-            padding: 0.8rem 1.5rem;
+        /* TOP HUD BANNER */
+        .hud-banner {
+            background: rgba(3, 7, 18, 0.95);
+            border-bottom: 2px solid var(--neon-cyan);
+            padding: 12px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .brand-badge {
-            background: var(--accent-amber);
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-        }
-
-        /* HÁROMOSZLOPOS GRID */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 240px 1fr 380px;
-            gap: 15px;
-            padding: 15px;
-            flex: 1;
-            height: calc(100vh - 60px);
-        }
-
-        .panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .panel-header {
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid var(--panel-border);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--accent-amber);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* BAL OSZLOP: NAVIGÁCIÓ & SZŰRŐK */
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 10px;
-        }
-
-        .nav-item {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 10px 12px;
-            text-align: left;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent-amber);
-        }
-
-        /* KÖZÉPSŐ OSZLOP: ADATBÁZIS MÁTRIX */
-        .search-box {
-            padding: 10px 15px;
-            border-bottom: 1px solid var(--panel-border);
-        }
-
-        .search-input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--panel-border);
-            border-radius: 6px;
-            padding: 10px 12px;
+        .hud-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
             color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hud-logo span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        /* LAYOUT GRID */
+        .hud-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            padding: 20px;
+            flex: 1;
+            max-width: 1700px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* PANELS */
+        .hud-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-line);
+            border-radius: 4px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .hud-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), transparent);
+        }
+
+        .panel-head {
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.85rem;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--neon-cyan);
+            border-bottom: 1px solid var(--border-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* FILTER & SEARCH */
+        .controls-bar {
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        .hud-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-line);
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 0.9rem;
             outline: none;
         }
 
-        .search-input:focus {
-            border-color: var(--accent-amber);
+        .hud-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
 
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 10px;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .btk-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--panel-border);
-            border-radius: 6px;
-            padding: 12px;
+        .cat-btn {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--border-line);
+            color: var(--text-dim);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .btk-card:hover {
-            border-color: var(--accent-amber);
-            background: rgba(245, 158, 11, 0.04);
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        .btk-code {
-            font-family: 'JetBrains Mono', monospace;
+        /* GRID CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: calc(100vh - 230px);
+        }
+
+        .cyber-card {
+            background: rgba(5, 12, 24, 0.8);
+            border: 1px solid var(--border-line);
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px);
+            background: rgba(0, 240, 255, 0.08);
+        }
+
+        .card-code {
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.75rem;
-            color: var(--accent-amber);
+            color: var(--neon-amber);
             margin-bottom: 4px;
         }
 
-        .btk-title {
-            font-size: 0.85rem;
-            font-weight: 600;
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
             margin-bottom: 8px;
         }
 
-        .btk-meta {
+        .card-foot {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-weight: 600;
         }
 
-        /* JOBB OSZLOP: ELJÁRÁSI LAP */
-        .docket-content {
+        /* RIGHT DOCKET */
+        .docket-list {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .docket-item {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--panel-border);
-            border-left: 3px solid var(--accent-amber);
-            padding: 8px 10px;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
-        .mod-bar {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+        .docket-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid var(--neon-cyan);
             padding: 10px;
-            border-top: 1px solid var(--panel-border);
-        }
-
-        .btn-mod {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--panel-border);
-            color: var(--text-muted);
-            padding: 6px;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .btn-mod.active {
-            background: var(--accent-amber);
-            color: #000;
-            font-weight: 700;
-        }
-
-        .summary-box {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 1px solid var(--panel-border);
-        }
-
-        .sum-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
         }
 
-        .val-fine {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            color: #22c55e;
+        .summary-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid var(--border-line);
+            padding: 15px;
+        }
+
+        .sum-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .sum-val {
+            font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-        }
-
-        .val-jail {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 1.1rem;
-            color: var(--accent-red);
-            font-weight: 700;
         }
 
-        .btn-export {
+        .btn-action {
             width: 100%;
-            background: var(--accent-amber);
-            color: #000;
-            border: none;
             padding: 12px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.85rem;
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 1px;
             cursor: pointer;
             margin-top: 10px;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
         }
 
-        .btn-export:hover {
-            opacity: 0.9;
+        .btn-action:hover {
+            box-shadow: 0 0 15px var(--neon-cyan);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">
-            <span class="brand-badge">ORFK</span> COMMAND TERMINAL v2.5
+    <div class="hud-banner">
+        <div class="hud-logo">
+            <span>//</span> ORFK_TAC_HUD v3.0
         </div>
-        <div style="font-size: 0.8rem; color: var(--text-muted);">
-            OPERATOR: <span style="color: #fff;">AKTÍV JÁRŐR</span>
+        <div style="font-size: 0.85rem; color: var(--text-dim);">
+            SYSTEM STATUS: <span style="color: var(--neon-cyan);">ONLINE</span>
         </div>
-    </header>
+    </div>
 
-    <div class="main-layout">
+    <div class="hud-container">
         <!-- BAL OSZLOP -->
-        <div class="panel">
-            <div class="panel-header">KATEGÓRIÁK</div>
-            <div class="nav-list">
-                <button class="nav-item active" onclick="filterCat('ALL', this)">Összes Vádpont</button>
-                <button class="nav-item" onclick="filterCat('KÖZLEKEDÉS', this)">Közlekedési Vétkek</button>
-                <button class="nav-item" onclick="filterCat('HATÓSÁG', this)">Hatósági Ügyek</button>
-                <button class="nav-item" onclick="filterCat('KÖZREND', this)">Közrend & Bűnözés</button>
-                <button class="nav-item" onclick="filterCat('SZEMÉLY', this)">Személy & Vagyon</button>
+        <div class="hud-panel">
+            <div class="panel-head">
+                <span>BTK MÁTRIX ADATBÁZIS</span>
             </div>
-        </div>
+            
+            <div class="controls-bar">
+                <input type="text" id="hudSearch" class="hud-input" placeholder="> VÁDPONT VAGY KÓD KERESÉSE..." oninput="renderCards()">
+            </div>
 
-        <!-- KÖZÉPSŐ OSZLOP -->
-        <div class="panel">
-            <div class="panel-header">
-                <span>BTK ADATBÁZIS</span>
-                <span id="cardCount" style="color: var(--text-muted);">0 tétel</span>
+            <div style="padding: 10px 12px 0 12px; display: flex; gap: 6px; overflow-x: auto;">
+                <button class="cat-btn active" onclick="setCat('ALL', this)">ÖSSZES</button>
+                <button class="cat-btn" onclick="setCat('KÖZLEKEDÉS', this)">KÖZLEKEDÉS</button>
+                <button class="cat-btn" onclick="setCat('HATÓSÁG', this)">HATÓSÁG</button>
+                <button class="cat-btn" onclick="setCat('KÖZREND', this)">KÖZREND</button>
+                <button class="cat-btn" onclick="setCat('SZEMÉLY', this)">SZEMÉLY/VAGYON</button>
             </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="Gyorskeresés kód vagy név alapján..." oninput="renderCards()">
-            </div>
-            <div class="matrix-grid" id="matrixGrid">
-                <!-- JavaScript tölti fel -->
-            </div>
+
+            <div class="cards-grid" id="cardsGrid"></div>
         </div>
 
         <!-- JOBB OSZLOP -->
-        <div class="panel">
-            <div class="panel-header">
-                <span>ELJÁRÁSI JEGYZŐKÖNYV</span>
-                <button onclick="clearDocket()" style="background:none; border:none; color:var(--accent-red); cursor:pointer; font-size:0.75rem;">Kiürítés</button>
-            </div>
-            
-            <div class="docket-content" id="docketContent">
-                <div style="margin: auto; color: var(--text-muted); font-size: 0.8rem;">Nincs intézkedés alá vont vádpont.</div>
+        <div class="hud-panel">
+            <div class="panel-head">
+                <span>ÉLŐ INTÉZKEDÉSI JEGYZÉK</span>
+                <button onclick="clearDocket()" style="background:none; border:none; color:var(--neon-pink); cursor:pointer; font-weight:700;">TÖRLÉS</button>
             </div>
 
-            <div class="mod-bar">
-                <button class="btn-mod" onclick="setMod(0.75, this)">-25% ENYH.</button>
-                <button class="btn-mod active" onclick="setMod(1, this)">ALAPÉRTÉK</button>
-                <button class="btn-mod" onclick="setMod(1.5, this)">+50% SÚLY.</button>
+            <div class="docket-list" id="docketList">
+                <div style="margin: auto; color: var(--text-dim); text-align: center;">NINCS KIVÁLASZTOTT VÁDPONT</div>
             </div>
 
-            <div class="summary-box">
-                <div class="sum-row">
-                    <span>Pénzbírság:</span>
-                    <span class="val-fine" id="dispFine">0 Ft</span>
+            <div class="summary-panel">
+                <div class="sum-item">
+                    <span>BÍRSÁG ÖSSZESEN:</span>
+                    <span class="sum-val" style="color: var(--neon-amber);" id="totalFine">0 FT</span>
                 </div>
-                <div class="sum-row">
-                    <span>Szabadságvesztés:</span>
-                    <span class="val-jail" id="dispJail">0 perc</span>
+                <div class="sum-item">
+                    <span>BÖRTÖN ÖSSZESEN:</span>
+                    <span class="sum-val" style="color: var(--neon-pink);" id="totalJail">0 PERC</span>
                 </div>
-                <button class="btn-export" onclick="copyLog()">JEGYZŐKÖNYV MÁSOLÁSA</button>
+                <button class="btn-action" onclick="copyDocket()">MDC ADATLAP MÁSOLÁSA</button>
             </div>
         </div>
     </div>
 
     <script>
-        const btkDb = [
+        const btkData = [
             { code: "§1.1", title: "Tilosban parkolás", fine: 30000, jail: 0, cat: "KÖZLEKEDÉS" },
             { code: "§1.3", title: "Súlyos sebességtúllépás", fine: 90000, jail: 0, cat: "KÖZLEKEDÉS" },
             { code: "§1.20", title: "Menekülés járművel", fine: 150000, jail: 20, cat: "KÖZLEKEDÉS" },
             { code: "§2.1", title: "Intézkedés akadályozása", fine: 80000, jail: 10, cat: "HATÓSÁG" },
             { code: "§2.6", title: "Hivatalos személy elleni erőszak", fine: 200000, jail: 30, cat: "HATÓSÁG" },
             { code: "§3.1", title: "Garázdaság", fine: 120000, jail: 15, cat: "KÖZREND" },
-            { code: "§3.6", title: "Illegális fegyverbirtoklás (Nehéz)", fine: 350000, jail: 40, cat: "KÖZREND" },
+            { code: "§3.6", title: "Illegális fegyverbirtoklás", fine: 350000, jail: 40, cat: "KÖZREND" },
             { code: "§3.9", title: "Kábítószer kereskedelem", fine: 300000, jail: 35, cat: "KÖZREND" },
             { code: "§4.7", title: "Emberölés", fine: 500000, jail: 60, cat: "SZEMÉLY" },
-            { code: "§4.9", title: "Emberrablás", fine: 450000, jail: 50, cat: "SZEMÉLY" },
-            { code: "§5.11", title: "Bankrablás", fine: 450000, jail: 40, cat: "SZEMÉLY" }
+            { code: "§4.9", title: "Emberrablás", fine: 450000, jail: 50, cat: "SZEMÉLY" }
         ];
 
-        let selectedCat = 'ALL';
+        let activeCat = 'ALL';
         let docket = [];
-        let multiplier = 1;
 
-        function filterCat(cat, btn) {
-            selectedCat = cat;
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        function setCat(cat, btn) {
+            activeCat = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderCards();
         }
 
         function renderCards() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const grid = document.getElementById('matrixGrid');
+            const query = document.getElementById('hudSearch').value.toLowerCase();
+            const grid = document.getElementById('cardsGrid');
             grid.innerHTML = '';
 
-            const filtered = btkDb.filter(i => {
-                const matchCat = selectedCat === 'ALL' || i.cat === selectedCat;
-                const matchQuery = i.title.toLowerCase().includes(query) || i.code.toLowerCase().includes(query);
-                return matchCat && matchQuery;
-            });
-
-            document.getElementById('cardCount').innerText = `${filtered.length} tétel`;
-
-            filtered.forEach(item => {
+            btkData.filter(item => {
+                const matchCat = activeCat === 'ALL' || item.cat === activeCat;
+                const matchSearch = item.title.toLowerCase().includes(query) || item.code.toLowerCase().includes(query);
+                return matchCat && matchSearch;
+            }).forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'btk-card';
-                card.onclick = () => addItem(item);
+                card.className = 'cyber-card';
+                card.onclick = () => addDocket(item);
                 card.innerHTML = `
-                    <div class="btk-code">${item.code}</div>
-                    <div class="btk-title">${item.title}</div>
-                    <div class="btk-meta">
-                        <span>${item.fine.toLocaleString()} Ft</span>
-                        <span>${item.jail} perc</span>
+                    <div class="card-code">${item.code} // ${item.cat}</div>
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-foot">
+                        <span>💰 ${item.fine.toLocaleString()} FT</span>
+                        <span>🔒 ${item.jail} PERC</span>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        function addItem(item) {
+        function addDocket(item) {
             docket.push({ ...item, id: Date.now() + Math.random() });
             renderDocket();
         }
 
-        function removeItem(id) {
+        function removeDocket(id) {
             docket = docket.filter(i => i.id !== id);
             renderDocket();
         }
@@ -415,61 +374,49 @@
             renderDocket();
         }
 
-        function setMod(m, btn) {
-            multiplier = m;
-            document.querySelectorAll('.btn-mod').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderDocket();
-        }
-
         function renderDocket() {
-            const container = document.getElementById('docketContent');
-            container.innerHTML = '';
+            const list = document.getElementById('docketList');
+            list.innerHTML = '';
 
             if (docket.length === 0) {
-                container.innerHTML = '<div style="margin: auto; color: var(--text-muted); font-size: 0.8rem;">Nincs intézkedés alá vont vádpont.</div>';
+                list.innerHTML = '<div style="margin: auto; color: var(--text-dim); text-align: center;">NINCS KIVÁLASZTOTT VÁDPONT</div>';
                 updateTotals(0, 0);
                 return;
             }
 
-            let totalFine = 0;
-            let totalJail = 0;
+            let fine = 0, jail = 0;
 
             docket.forEach(item => {
-                const f = Math.round(item.fine * multiplier);
-                const j = Math.round(item.jail * multiplier);
-                totalFine += f;
-                totalJail += j;
+                fine += item.fine;
+                jail += item.jail;
 
                 const row = document.createElement('div');
-                row.className = 'docket-item';
+                row.className = 'docket-card';
                 row.innerHTML = `
                     <div>
-                        <div style="font-weight:600;">${item.code} ${item.title}</div>
-                        <div style="color:var(--text-muted); font-size:0.75rem;">${f.toLocaleString()} Ft | ${j} perc</div>
+                        <div style="font-weight:700; color:#fff; font-size:0.85rem;">${item.code} ${item.title}</div>
+                        <div style="font-size:0.75rem; color:var(--text-dim);">${item.fine.toLocaleString()} FT | ${item.jail} PERC</div>
                     </div>
-                    <button onclick="removeItem(${item.id})" style="background:none; border:none; color:var(--accent-red); cursor:pointer;">✖</button>
+                    <button onclick="removeDocket(${item.id})" style="background:none; border:none; color:var(--neon-pink); cursor:pointer; font-size:1.1rem;">✖</button>
                 `;
-                container.appendChild(row);
+                list.appendChild(row);
             });
 
-            updateTotals(totalFine, totalJail);
+            updateTotals(fine, jail);
         }
 
         function updateTotals(f, j) {
-            document.getElementById('dispFine').innerText = f.toLocaleString() + ' Ft';
-            document.getElementById('dispJail').innerText = j + ' perc';
+            document.getElementById('totalFine').innerText = f.toLocaleString() + ' FT';
+            document.getElementById('totalJail').innerText = j + ' PERC';
         }
 
-        function copyLog() {
+        function copyDocket() {
             if (docket.length === 0) return;
-            let txt = "--- ORFK JEGYZŐKÖNYV ---\n";
-            docket.forEach(i => {
-                txt += `• ${i.code} ${i.title}\n`;
-            });
-            txt += `\nBírság: ${document.getElementById('dispFine').innerText}\nBörtön: ${document.getElementById('dispJail').innerText}`;
-            navigator.clipboard.writeText(txt);
-            alert("Jegyzőkönyv kimásolva!");
+            let log = `=== ORFK TAC LOG ===\nVÁDCSOMAG:\n`;
+            docket.forEach(i => log += `> ${i.code} ${i.title}\n`);
+            log += `-------------------\nÖSSZESEN: ${document.getElementById('totalFine').innerText} / ${document.getElementById('totalJail').innerText}`;
+            navigator.clipboard.writeText(log);
+            alert("MDC LOG MÁSOLVA A VÁGÓLAPRA!");
         }
 
         renderCards();
