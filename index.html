@@ -6,12 +6,12 @@
     <title>ORFK - Toborzó és Tájékoztató Portál</title>
     <style>
         :root {
-            --bg-dark: #030712;
-            --card-bg: rgba(15, 23, 42, 0.7);
-            --card-border: rgba(59, 130, 246, 0.3);
+            --bg-dark: #070913;
+            --card-bg: rgba(18, 24, 43, 0.65);
+            --card-border: rgba(99, 102, 241, 0.2);
             --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
             --accent-cyan: #06b6d4;
-            --accent-gold: #f59e0b;
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -20,192 +20,211 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+        ::-webkit-scrollbar-thumb { background: #312e81; border-radius: 3px; }
 
         html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
-            line-height: 1.4;
+            line-height: 1.5;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
-            background-attachment: fixed;
+            position: relative;
+        }
+
+        /* MOZGÓ HÁTTÉR ANIMÁCIÓ */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.12), transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1), transparent 50%);
+            filter: blur(60px);
+            animation: moveBg 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveBg {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, 2%); }
+            100% { transform: scale(1) translate(2%, -2%); }
         }
 
         header {
-            background-color: rgba(3, 7, 18, 0.9);
-            backdrop-filter: blur(12px);
-            padding: 0.8rem 4vw;
+            background: rgba(7, 9, 19, 0.75);
+            backdrop-filter: blur(16px);
+            padding: 0.8rem 5vw;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--text-light);
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .logo span { color: var(--accent-cyan); text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
+        .logo span { color: var(--accent-cyan); }
 
         nav { display: flex; gap: 1.5rem; }
 
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            font-size: 0.9rem;
+            transition: color 0.2s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
         }
 
-        nav a:hover {
-            color: var(--text-light);
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
+        nav a:hover { color: var(--text-light); }
 
         .hero {
             text-align: center;
-            padding: 3.5rem 4vw 2.5rem 4vw;
+            padding: 3.5rem 2vw 2rem 2vw;
         }
 
         .hero-badge {
-            background: rgba(37, 99, 235, 0.15);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            padding: 0.3rem 1.2rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.25rem 0.9rem;
             border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
             display: inline-block;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             line-height: 1.1;
-            margin-bottom: 0.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+            margin-bottom: 0.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
             color: var(--text-muted);
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto 1.5rem auto;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
         }
 
         .btn {
-            background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-blue));
             color: white;
-            padding: 0.6rem 1.6rem;
+            padding: 0.55rem 1.4rem;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             transition: all 0.2s ease;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.35);
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.5);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
 
         .btn-secondary {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(18, 24, 43, 0.8);
             color: var(--text-light);
             border: 1px solid var(--card-border);
             box-shadow: none;
         }
 
         .btn-secondary:hover {
-            background: #1e293b;
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .container {
             width: 100%;
-            padding: 0 3vw;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
             margin-bottom: 3rem;
         }
 
-        section { margin-bottom: 2.5rem; }
+        section { margin-bottom: 2rem; }
 
         .section-header {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             text-align: center;
         }
 
-        .section-header h2 { font-size: 1.8rem; font-weight: 800; }
-        .section-header p { color: var(--text-muted); margin-top: 0.2rem; font-size: 0.95rem; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 700; }
+        .section-header p { color: var(--text-muted); margin-top: 0.2rem; font-size: 0.85rem; }
 
         .grid-4 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
         }
 
-        .grid-2-wide {
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
-        @media (max-width: 900px) {
-            .grid-2-wide { grid-template-columns: 1fr; }
+        @media (max-width: 800px) {
+            .grid-2 { grid-template-columns: 1fr; }
         }
 
         .panel-box {
-            background: rgba(15, 23, 42, 0.55);
+            background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.25rem;
             backdrop-filter: blur(12px);
         }
 
         .panel-header {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.4rem;
         }
 
         .panel-header h2 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #fff;
             display: flex;
             align-items: center;
@@ -213,56 +232,98 @@
         }
 
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 1.2rem;
-            border-radius: 12px;
-            transition: all 0.25s ease;
-            height: 100%;
+            background: rgba(11, 15, 28, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(59, 130, 246, 0.6);
-            background: rgba(15, 23, 42, 0.85);
+            border-color: var(--accent-indigo);
+            transform: translateY(-2px);
         }
 
-        .card-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
-        .card h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-        .card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.4; }
+        .card-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+        .card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .card p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.4; }
 
-        .rank-card {
-            background: rgba(15, 23, 42, 0.6);
+        /* ÚJ PANEL: STATISZTIKÁK */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            background: rgba(11, 15, 28, 0.5);
             border: 1px solid var(--card-border);
-            border-left: 4px solid var(--accent-blue);
             padding: 1rem;
             border-radius: 10px;
-            transition: all 0.2s ease;
         }
-        .rank-card:hover {
-            border-left-color: var(--accent-gold);
-            transform: translateX(4px);
-            background: rgba(15, 23, 42, 0.95);
-        }
-        .rank-title { font-weight: 800; font-size: 0.95rem; color: #fff; }
-        .rank-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* COMPACT BTK KALKULÁTOR */
-        .calc-box {
-            background: rgba(15, 23, 42, 0.75);
+        .stat-num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ÚJ PANEL: HÍREK & KÖRÖZÉSEK */
+        .news-item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .news-item:last-child { border-bottom: none; }
+        .news-tag {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .news-title { font-size: 0.85rem; font-weight: 600; }
+        .news-date { font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
+
+        .rank-card {
+            background: rgba(11, 15, 28, 0.5);
             border: 1px solid var(--card-border);
-            padding: 1.8rem;
-            border-radius: 16px;
-            backdrop-filter: blur(16px);
+            border-left: 3px solid var(--accent-indigo);
+            padding: 0.8rem;
+            border-radius: 8px;
+        }
+        .rank-title { font-weight: 700; font-size: 0.88rem; color: #fff; }
+        .rank-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* TISZTA BTK KALKULÁTOR (KERESŐ NÉLKÜL) */
+        .calc-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.25rem;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
         }
 
         .calc-grid {
             display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 1.8rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
         }
 
-        @media (max-width: 950px) {
+        @media (max-width: 850px) {
             .calc-grid { grid-template-columns: 1fr; }
         }
 
@@ -270,45 +331,34 @@
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
+
         .preset-btn {
-            background: rgba(37, 99, 235, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            color: #93c5fd;
-            padding: 0.35rem 0.7rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+            padding: 0.3rem 0.6rem;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .preset-btn:hover {
-            background: var(--accent-blue);
-            color: white;
-        }
 
-        .calc-input {
-            width: 100%;
-            padding: 0.6rem 0.8rem;
-            border-radius: 8px;
-            border: 1px solid var(--card-border);
-            background-color: var(--bg-dark);
+        .preset-btn:hover {
+            background: var(--accent-indigo);
             color: white;
-            font-size: 0.88rem;
-            outline: none;
-            margin-bottom: 0.6rem;
         }
-        .calc-input:focus { border-color: var(--accent-blue); }
 
         .calc-select {
             width: 100%;
-            padding: 0.6rem 0.8rem;
-            border-radius: 8px;
+            padding: 0.55rem 0.75rem;
+            border-radius: 6px;
             border: 1px solid var(--card-border);
-            background-color: var(--bg-dark);
+            background-color: rgba(7, 9, 19, 0.9);
             color: white;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             outline: none;
         }
 
@@ -320,30 +370,29 @@
 
         .mod-btn {
             flex: 1;
-            padding: 0.4rem;
-            background: rgba(15, 23, 42, 0.9);
+            padding: 0.35rem;
+            background: rgba(11, 15, 28, 0.8);
             border: 1px solid var(--card-border);
             color: var(--text-muted);
             border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             text-align: center;
         }
 
         .mod-btn.active {
-            background: var(--accent-blue);
+            background: var(--accent-indigo);
             color: white;
-            border-color: var(--accent-blue);
+            border-color: var(--accent-indigo);
         }
 
         .selected-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            min-height: 140px;
-            max-height: 220px;
+            gap: 0.4rem;
+            min-height: 120px;
+            max-height: 180px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -352,67 +401,48 @@
             color: var(--text-muted);
             font-style: italic;
             text-align: center;
-            font-size: 0.9rem;
-            padding: 2.5rem 1rem;
-            border: 1px dashed var(--card-border);
-            border-radius: 10px;
+            font-size: 0.8rem;
+            padding: 2rem 1rem;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
         }
 
         .selected-item {
-            background: rgba(7, 10, 18, 0.85);
+            background: rgba(7, 9, 19, 0.8);
             border: 1px solid var(--card-border);
-            padding: 0.6rem 0.9rem;
-            border-radius: 8px;
+            padding: 0.45rem 0.75rem;
+            border-radius: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            animation: springIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
-
-        .selected-item.removing {
-            animation: shakeOut 0.25s forwards cubic-bezier(0.36, 0.07, 0.19, 0.97);
-        }
-
-        @keyframes springIn {
-            0% { opacity: 0; transform: translateY(-10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes shakeOut {
-            0% { transform: translateX(0); opacity: 1; }
-            100% { opacity: 0; transform: translateY(10px); max-height: 0; padding: 0; margin: 0; border: none; }
+            font-size: 0.8rem;
         }
 
         .remove-btn {
             background: rgba(239, 68, 68, 0.15);
             color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.35);
-            border-radius: 6px;
-            padding: 0.2rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            padding: 0.15rem 0.4rem;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-        }
-        .remove-btn:hover {
-            background: rgba(239, 68, 68, 0.5);
-            color: white;
         }
 
         .summary-box {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(3, 7, 18, 0.85);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            border-radius: 10px;
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            background: rgba(7, 9, 19, 0.9);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
             display: flex;
             justify-content: space-around;
             text-align: center;
         }
 
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: 900;
+            font-size: 1.3rem;
+            font-weight: 800;
             display: block;
         }
 
@@ -421,87 +451,40 @@
 
         .calc-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 1rem;
+            gap: 8px;
+            margin-top: 0.8rem;
             justify-content: flex-end;
-        }
-
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            margin-bottom: 0.6rem;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            padding: 0.8rem 1.2rem;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-question span { font-size: 1.1rem; transition: transform 0.3s ease; }
-
-        .faq-answer {
-            padding: 0 1.2rem;
-            max-height: 0;
-            overflow: hidden;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 0.6rem 1.2rem 1rem 1.2rem;
-            max-height: 200px;
-            opacity: 1;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .faq-item.active .faq-question span {
-            transform: rotate(45deg);
-            color: var(--accent-cyan);
         }
 
         footer {
             text-align: center;
-            padding: 2rem 1rem;
-            background-color: #02040a;
+            padding: 1.5rem 1rem;
+            background: rgba(7, 9, 19, 0.9);
             color: var(--text-muted);
-            border-top: 1px solid var(--card-border);
-            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
+    <div class="animated-bg"></div>
+
     <header>
         <a href="#" class="logo">🚔 ORFK | <span>SunRise RP</span></a>
         <nav>
-            <a href="#about">Rólunk</a>
-            <a href="#rules">Szabályzat</a>
+            <a href="#stats">Statisztikák</a>
             <a href="#divisions">Alosztályok</a>
             <a href="#ranks">Rangok</a>
             <a href="#calculator">BTK Kalkulátor</a>
-            <a href="#faq">GYIK</a>
             <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" style="color: var(--accent-cyan);">Jelentkezés ↗</a>
         </nav>
     </header>
 
     <div class="hero">
-        <span class="hero-badge">Hivatalos Frakció Portál</span>
+        <span class="hero-badge">Hivatalos Rendvédelmi Portál</span>
         <h1>Országos Rendőr-főkapitányság</h1>
-        <p>A rend, a biztonság és a hivatástudat otthona. Csatlakozz a város legfelkészültebb csapatához!</p>
+        <p>A rend, a biztonság és a hivatástudat otthona. Csatlakozz hozzánk és védd a várost!</p>
         <div class="hero-buttons">
             <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" class="btn">📝 Jelentkezési Lap</a>
             <a href="#calculator" class="btn btn-secondary">⚡ BTK Kalkulátor</a>
@@ -510,41 +493,60 @@
 
     <div class="container">
 
-        <section id="about">
-            <div class="grid-2-wide">
+        <!-- ÚJ PANEL: ELEMÉRZŐ STATISZTIKÁK -->
+        <section id="stats">
+            <div class="panel-box">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-num">42 Fő</span>
+                        <span class="stat-label">Aktív Állomány</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">1,280+</span>
+                        <span class="stat-label">Sikeres Elfogás</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">98%</span>
+                        <span class="stat-label">Ügyfelderítési Arány</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">24/7</span>
+                        <span class="stat-label">Járőrszolgálat</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÚJ PANEL: HÍREK ÉS KÖRÖZÉSEK -->
+        <section>
+            <div class="grid-2">
                 <div class="panel-box">
                     <div class="panel-header">
-                        <h2>⭐ Miért csatlakozz hozzánk?</h2>
+                        <h2>📢 Kiemelt Felhívások</h2>
                     </div>
-                    <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
-                        <div class="card">
-                            <div class="card-icon">🚔</div>
-                            <h3>Pörgős Járőrszolgálat</h3>
-                            <p>Folyamatos akciók, igazoltatások, üldözések és reális rendőri intézkedések.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">📈</div>
-                            <h3>Karrierlehetőség</h3>
-                            <p>Rendszeres előléptetések az aktivitásod és a teljesítményed alapján.</p>
-                        </div>
+                    <div class="news-item">
+                        <span class="news-tag">KÖRÖZÉS</span>
+                        <div class="news-title">Fokozott ellenőrzés a belvárosi szektorban</div>
+                        <div class="news-date">Ma</div>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-tag" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">TOBORZÁS</span>
+                        <div class="news-title">Új Kadét ciklus indul - Jelentkezz most!</div>
+                        <div class="news-date">Tegnap</div>
                     </div>
                 </div>
 
-                <div class="panel-box" id="rules">
+                <div class="panel-box">
                     <div class="panel-header">
-                        <h2>📜 Szolgálati Irányelvek</h2>
+                        <h2>📜 Szolgálati Alapelvek</h2>
                     </div>
-                    <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
-                        <div class="card">
-                            <div class="card-icon">📻</div>
-                            <h3>Rádiózás</h3>
-                            <p>Rövid, pontos rádiózás. Saját egység és pozíció megadása minden üldözésnél.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">🔫</div>
-                            <h3>Fegyverhasználat</h3>
-                            <p>Éles fegyvert kizárólag életveszély esetén, a fokozatosság betartásával.</p>
-                        </div>
+                    <div class="news-item">
+                        <span class="news-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">RÁDIÓZÁS</span>
+                        <div class="news-title">Pontos kódok használata és egységmegjelölés kötelező.</div>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">FEGYVER</span>
+                        <div class="news-title">Fokozatosság elve: sokkoló → éles fegyver (csak életveszélyben).</div>
                     </div>
                 </div>
             </div>
@@ -552,29 +554,28 @@
 
         <section id="divisions">
             <div class="section-header">
-                <h2>🛡️ Specializálódj Alosztályainkban</h2>
-                <p>Képezd magad tovább a rendőrségen belüli szakterületeken!</p>
+                <h2>Alosztályaink</h2>
             </div>
             <div class="grid-4">
                 <div class="card">
                     <div class="card-icon">🕵️‍♂️</div>
                     <h3>Nyomozati Osztály</h3>
-                    <p>Bűnügyi felderítések, titkos adatgyűjtések és megfigyelések.</p>
+                    <p>Bűnügyi felderítések, megfigyelések és nyomozások.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🚔</div>
-                    <h3>Közrendészeti Osztály</h3>
-                    <p>A szervezet alappillére. Közterületi jelenlét és rendfenntartás.</p>
+                    <h3>Közrendészet</h3>
+                    <p>Közterületi jelenlét, igazoltatások és rendfenntartás.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🚁</div>
                     <h3>Légi Egység</h3>
-                    <p>Helikopteres járőrszolgálat, légi üldözések támogatása.</p>
+                    <p>Légi támogatás és gyors reagálású felderítés.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🛡️</div>
-                    <h3>TEK / Bevetési Egység</h3>
-                    <p>Különleges műveletek, túszdrámák és nagy kockázatú akciók.</p>
+                    <h3>TEK / Bevetés</h3>
+                    <p>Nagy kockázatú akciók és túszdrámák felszámolása.</p>
                 </div>
             </div>
         </section>
@@ -582,89 +583,73 @@
         <section id="ranks">
             <div class="panel-box">
                 <div class="panel-header" style="text-align: center;">
-                    <h2>🎖️ Szolgálati Ranglétra</h2>
+                    <h2>🎖️ Ranglétra</h2>
                 </div>
                 <div class="grid-4">
                     <div class="rank-card">
                         <div class="rank-title">Kadét / Őrmester</div>
-                        <div class="rank-desc">Alapképzés és felügyelt járőrszolgálat.</div>
+                        <div class="rank-desc">Alapképzés és felügyelt járőrözés.</div>
                     </div>
                     <div class="rank-card">
                         <div class="rank-title">Törzs- / Főtörzsőrmester</div>
-                        <div class="rank-desc">Tapasztalt járőr, önálló intézkedési jogkör.</div>
+                        <div class="rank-desc">Önálló intézkedési jogkör rendelkező járőr.</div>
                     </div>
                     <div class="rank-card">
                         <div class="rank-title">Zászlós / Főtörzszászlós</div>
-                        <div class="rank-desc">Alosztályi irányítás és új kadétok betanítása.</div>
+                        <div class="rank-desc">Alosztályi irányítás és betanítás.</div>
                     </div>
                     <div class="rank-card">
                         <div class="rank-title">Tisztikar (Hadnagy+)</div>
-                        <div class="rank-desc">Akciók szervezése, felügyelet, frakcióvezetés.</div>
+                        <div class="rank-desc">Akciók felügyelete és frakcióvezetés.</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- BTK KALKULÁTOR (KERESŐSÁV NÉLKÜL) -->
         <section id="calculator">
             <div class="section-header">
                 <h2>BTK Kalkulátor</h2>
-                <p>Gyors szűrés, vádak hozzáadása és azonnali jegyzőkönyv generálás.</p>
+                <p>Gyors gombok és választólista a büntetések pontos kiszámításához.</p>
             </div>
 
             <div class="calc-box">
                 <div class="calc-grid">
                     <div>
                         <div class="preset-buttons">
-                            <button class="preset-btn" onclick="addPreset('§1.20 Rendőri intézkedés előli menekülés járművel')">+ Menekülés járművel</button>
+                            <button class="preset-btn" onclick="addPreset('§1.20 Rendőri intézkedés előli menekülés járművel')">+ Menekülés</button>
                             <button class="preset-btn" onclick="addPreset('§2.6 Hivatalos személy elleni erőszak')">+ Erőszak hiv. személy ellen</button>
                             <button class="preset-btn" onclick="addPreset('§5.11 Bankrablás')">+ Bankrablás</button>
                             <button class="preset-btn" onclick="addPreset('§4.9 Emberrablás')">+ Emberrablás</button>
                         </div>
 
-                        <input type="text" id="searchBtk" class="calc-input" placeholder="🔍 Keresés a vádak között..." onkeyup="filterOptions()">
-
                         <select id="btkSelect" class="calc-select" onchange="addBtkItem(this)">
-                            <option value="" disabled selected>-- Válassz a TELJES BTK listából --</option>
+                            <option value="" disabled selected>-- Válassz vádat a listából --</option>
                             
-                            <optgroup label="🚗 I. FEJEZET – KÖZLEKEDÉSI SZABÁLYSÉRTÉSEK">
-                                <option value="§1.1 Tilosban történő parkolás" data-fine="30000" data-jail="0">§1.1 Tilosban történő parkolás - 30.000 Ft | 0 perc</option>
-                                <option value="§1.2 Elsőbbségadás elmulasztása" data-fine="40000" data-jail="0">§1.2 Elsőbbségadás elmulasztása - 40.000 Ft | 0 perc</option>
-                                <option value="§1.4 Jogosítvány nélküli vezetés" data-fine="60000" data-jail="0">§1.4 Jogosítvány nélküli vezetés - 60.000 Ft | 0 perc</option>
-                                <option value="§1.8 Gyorshajtás lakott területen kívül" data-fine="40000" data-jail="0">§1.8 Gyorshajtás lakott területen kívül - 40.000 Ft | 0 perc</option>
-                                <option value="§1.9 Gyorshajtás lakott területen belül" data-fine="60000" data-jail="0">§1.9 Gyorshajtás lakott területen belül - 60.000 Ft | 0 perc</option>
-                                <option value="§1.16 Közúti veszélyeztetés" data-fine="150000" data-jail="20">§1.16 Közúti veszélyeztetés - 150.000 Ft | 20 perc</option>
-                                <option value="§1.19 Cserbenhagyás" data-fine="250000" data-jail="35">§1.19 Cserbenhagyás - 250.000 Ft | 35 perc</option>
-                                <option value="§1.20 Rendőri intézkedés előli menekülés járművel" data-fine="150000" data-jail="20">§1.20 Rendőri intézkedés előli menekülés járművel - 150.000 Ft | 20 perc</option>
+                            <optgroup label="🚗 I. FEJEZET – KÖZLEKEDÉS">
+                                <option value="§1.1 Tilosban történő parkolás" data-fine="30000" data-jail="0">§1.1 Tilosban parkolás - 30.000 Ft | 0p</option>
+                                <option value="§1.4 Jogosítvány nélküli vezetés" data-fine="60000" data-jail="0">§1.4 Jogosítvány nélkül - 60.000 Ft | 0p</option>
+                                <option value="§1.16 Közúti veszélyeztetés" data-fine="150000" data-jail="20">§1.16 Közúti veszélyeztetés - 150.000 Ft | 20p</option>
+                                <option value="§1.20 Rendőri intézkedés előli menekülés járművel" data-fine="150000" data-jail="20">§1.20 Menekülés járművel - 150.000 Ft | 20p</option>
                             </optgroup>
 
-                            <optgroup label="🏛️ II. FEJEZET – HATÓSÁG ELLENI BŰNCSELEKMÉNYEK">
-                                <option value="§2.1 Rendőri intézkedés akadályozása / megtagadása" data-fine="80000" data-jail="10">§2.1 Rendőri intézkedés akadályozása - 80.000 Ft | 10 perc</option>
-                                <option value="§2.5 Hivatalos személy megsértése" data-fine="80000" data-jail="0">§2.5 Hivatalos személy megsértése - 80.000 Ft | 0 perc</option>
-                                <option value="§2.6 Hivatalos személy elleni erőszak" data-fine="200000" data-jail="30">§2.6 Hivatalos személy elleni erőszak - 200.000 Ft | 30 perc</option>
-                                <option value="§2.8 Hivatali vesztegetés" data-fine="250000" data-jail="30">§2.8 Hivatali vesztegetés - 250.000 Ft | 30 perc</option>
+                            <optgroup label="🏛️ II. FEJEZET – HATÓSÁG ELLENI">
+                                <option value="§2.1 Rendőri intézkedés akadályozása" data-fine="80000" data-jail="10">§2.1 Intézkedés akadályozása - 80.000 Ft | 10p</option>
+                                <option value="§2.5 Hivatalos személy megsértése" data-fine="80000" data-jail="0">§2.5 Hiv. személy megsértése - 80.000 Ft | 0p</option>
+                                <option value="§2.6 Hivatalos személy elleni erőszak" data-fine="200000" data-jail="30">§2.6 Hiv. személy elleni erőszak - 200.000 Ft | 30p</option>
                             </optgroup>
 
-                            <optgroup label="⚖️ III. FEJEZET – KÖZREND ELLENI BŰNCSELEKMÉNYEK">
-                                <option value="§3.1 Garázdaság" data-fine="120000" data-jail="15">§3.1 Garázdaság - 120.000 Ft | 15 perc</option>
-                                <option value="§3.2 Fegyverrel elkövetett garázdaság" data-fine="250000" data-jail="30">§3.2 Fegyverrel elkövetett garázdaság - 250.000 Ft | 30 perc</option>
-                                <option value="§3.8 Tiltott tárgy birtoklása" data-fine="150000" data-jail="20">§3.8 Tiltott tárgy birtoklása - 150.000 Ft | 20 perc</option>
-                                <option value="§3.11 Terrorcselekmény" data-fine="500000" data-jail="50">§3.11 Terrorcselekmény - 500.000 Ft | 50 perc</option>
+                            <optgroup label="⚖️ III. FEJEZET – KÖZREND ELLENI">
+                                <option value="§3.1 Garázdaság" data-fine="120000" data-jail="15">§3.1 Garázdaság - 120.000 Ft | 15p</option>
+                                <option value="§3.8 Tiltott tárgy birtoklása" data-fine="150000" data-jail="20">§3.8 Tiltott tárgy birtoklása - 150.000 Ft | 20p</option>
+                                <option value="§3.11 Terrorcselekmény" data-fine="500000" data-jail="50">§3.11 Terrorcselekmény - 500.000 Ft | 50p</option>
                             </optgroup>
 
-                            <optgroup label="👤 IV. FEJEZET – SZEMÉLY ELLENI BŰNCSELEKMÉNYEK">
-                                <option value="§4.3 Könnyű testi sértés" data-fine="100000" data-jail="10">§4.3 Könnyű testi sértés - 100.000 Ft | 10 perc</option>
-                                <option value="§4.4 Súlyos testi sértés" data-fine="150000" data-jail="20">§4.4 Súlyos testi sértés - 150.000 Ft | 20 perc</option>
-                                <option value="§4.9 Emberrablás" data-fine="450000" data-jail="50">§4.9 Emberrablás - 450.000 Ft | 50 perc</option>
-                                <option value="§4.13 Emberölés" data-fine="500000" data-jail="50">§4.13 Emberölés - 500.000 Ft | 50 perc</option>
-                                <option value="§4.14 Emberölés kísérlete" data-fine="400000" data-jail="45">§4.14 Emberölés kísérlete - 400.000 Ft | 45 perc</option>
-                            </optgroup>
-
-                            <optgroup label="💰 V. FEJEZET – VAGYON ELLENI BŰNCSELEKMÉNYEK">
-                                <option value="§5.2 Lopás" data-fine="150000" data-jail="20">§5.2 Lopás - 150.000 Ft | 20 perc</option>
-                                <option value="§5.3 Jármű eltulajdonítása" data-fine="250000" data-jail="35">§5.3 Jármű eltulajdonítása - 250.000 Ft | 35 perc</option>
-                                <option value="§5.6 Rablás" data-fine="500000" data-jail="50">§5.6 Rablás - 500.000 Ft | 50 perc</option>
-                                <option value="§5.8 Bolt / Ruhabolt rablás" data-fine="250000" data-jail="35">§5.8 Bolt / Ruhabolt rablás - 250.000 Ft | 35 perc</option>
-                                <option value="§5.11 Bankrablás" data-fine="450000" data-jail="40">§5.11 Bankrablás - 450.000 Ft | 40 perc</option>
+                            <optgroup label="💰 IV. FEJEZET – SZEMÉLY ÉS VAGYON ELLENI">
+                                <option value="§4.4 Súlyos testi sértés" data-fine="150000" data-jail="20">§4.4 Súlyos testi sértés - 150.000 Ft | 20p</option>
+                                <option value="§4.9 Emberrablás" data-fine="450000" data-jail="50">§4.9 Emberrablás - 450.000 Ft | 50p</option>
+                                <option value="§5.3 Jármű eltulajdonítása" data-fine="250000" data-jail="35">§5.3 Járműlopás - 250.000 Ft | 35p</option>
+                                <option value="§5.11 Bankrablás" data-fine="450000" data-jail="40">§5.11 Bankrablás - 450.000 Ft | 40p</option>
                             </optgroup>
                         </select>
 
@@ -677,55 +662,26 @@
 
                     <div>
                         <div id="selectedList" class="selected-list">
-                            <div class="selected-list-empty">Még nincs kiválasztva tétel...</div>
+                            <div class="selected-list-empty">Nincs kiválasztva tétel...</div>
                         </div>
 
                         <div class="summary-box">
                             <div>
-                                <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 700;">BÍRSÁG</span>
+                                <span style="color: var(--text-muted); font-size: 0.7rem; font-weight: 700;">BÍRSÁG</span>
                                 <span class="stat-value val-fine" id="totalFine">0 Ft</span>
                             </div>
                             <div>
-                                <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 700;">BÖRTÖNIDŐ</span>
+                                <span style="color: var(--text-muted); font-size: 0.7rem; font-weight: 700;">BÖRTÖN</span>
                                 <span class="stat-value val-jail" id="totalJail">0 perc</span>
                             </div>
                         </div>
 
                         <div class="calc-actions">
-                            <button class="btn btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8rem;" onclick="clearAllItems()">🗑️ Törlés</button>
-                            <button class="btn" style="padding: 0.4rem 1rem; font-size: 0.8rem;" onclick="copyReport()">📋 Jegyzőkönyv Másolása</button>
+                            <button class="btn btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;" onclick="clearAllItems()">🗑️ Törlés</button>
+                            <button class="btn" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;" onclick="copyReport()">📋 Másolás</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="faq">
-            <div class="section-header">
-                <h2>Gyakran Ismételt Kérdések</h2>
-            </div>
-
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">Mik a jelentkezés alapvető feltételei? <span>+</span></div>
-                    <div class="faq-answer">Működő mikrofon, Discord használat, alapvető RP tudás és szabályzat ismeret, valamint heti 10-15 óra aktivitás.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">Hogyan zajlik a tagfelvétel? <span>+</span></div>
-                    <div class="faq-answer">Első lépésben ki kell töltened a Google Forms lapot. Elfogadás után behívunk egy TS3 / Discord szóbeli meghallgatásra.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">Mennyi idő után csatlakozhatok alosztályhoz? <span>+</span></div>
-                    <div class="faq-answer">A próbaidő sikeres teljesítése (kb. 1-2 hét) és az Őrmesteri rang elérése után.</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="apply">
-            <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%); padding: 2.5rem 1.5rem; border-radius: 16px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.4);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Készen állsz a szolgálatra?</h2>
-                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">Töltsd ki a jelentkezési lapot, és csatlakozz hozzánk még ma!</p>
-                <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" class="btn">Jelentkezési Lap Megnyitása ↗</a>
             </div>
         </section>
 
@@ -774,43 +730,14 @@
             renderSelected();
         }
 
-        function filterOptions() {
-            const filter = document.getElementById('searchBtk').value.toLowerCase();
-            const select = document.getElementById('btkSelect');
-            const options = select.getElementsByTagName('option');
-
-            for (let i = 0; i < options.length; i++) {
-                const txtValue = options[i].textContent || options[i].innerText;
-                if (txtValue.toLowerCase().indexOf(filter) > -1 || options[i].value === "") {
-                    options[i].style.display = "";
-                } else {
-                    options[i].style.display = "none";
-                }
-            }
-        }
-
         function removeItem(id) {
-            const el = document.getElementById(`item-${id}`);
-            if (el) {
-                el.classList.add('removing');
-                setTimeout(() => {
-                    selectedItems = selectedItems.filter(item => item.id !== id);
-                    renderSelected();
-                }, 240);
-            }
+            selectedItems = selectedItems.filter(item => item.id !== id);
+            renderSelected();
         }
 
         function clearAllItems() {
-            const listContainer = document.getElementById('selectedList');
-            const items = listContainer.querySelectorAll('.selected-item');
-            
-            if (items.length === 0) return;
-
-            items.forEach(el => el.classList.add('removing'));
-            setTimeout(() => {
-                selectedItems = [];
-                renderSelected();
-            }, 240);
+            selectedItems = [];
+            renderSelected();
         }
 
         function renderSelected() {
@@ -818,7 +745,7 @@
             listContainer.innerHTML = '';
 
             if (selectedItems.length === 0) {
-                listContainer.innerHTML = '<div class="selected-list-empty">Még nincs kiválasztva tétel...</div>';
+                listContainer.innerHTML = '<div class="selected-list-empty">Nincs kiválasztva tétel...</div>';
                 updateTotals(0, 0);
                 return;
             }
@@ -835,9 +762,8 @@
 
                 const div = document.createElement('div');
                 div.className = 'selected-item';
-                div.id = `item-${item.id}`;
                 div.innerHTML = `
-                    <span><strong>${item.name}</strong> - ${calcFine.toLocaleString()} Ft | ${calcJail} perc</span>
+                    <span><strong>${item.name}</strong> - ${calcFine.toLocaleString()} Ft | ${calcJail}p</span>
                     <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
                 `;
                 listContainer.appendChild(div);
@@ -869,17 +795,11 @@
             });
 
             let modText = currentMultiplier === 0.75 ? " (-25% Enyhítés)" : currentMultiplier === 1.5 ? " (+50% Súlyosbítás)" : "";
-
             text += `\nÖsszes bírság: ${fine.toLocaleString()} Ft\nÖsszes börtönidő: ${jail} perc${modText}`;
 
             navigator.clipboard.writeText(text).then(() => {
-                alert("A büntetési jegyzőkönyv másolva a vágólapra!");
+                alert("Jegyzőkönyv másolva a vágólapra!");
             });
-        }
-
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
         }
     </script>
 </body>
