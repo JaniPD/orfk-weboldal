@@ -2,31 +2,18 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ORFK • SunRise RP — Büntetéskalkulátor</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#050b12;color:#edf5fc;font-family:Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:28px 18px}.box{background:#0b1724;border:1px solid #25435e;border-radius:12px;padding:22px;margin-bottom:18px}h1{font-size:42px;margin:0 0 8px}h1 span{color:#65b6ff}.muted{color:#8fa6bb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin:14px 0}.field label{display:block;font-size:12px;font-weight:bold;letter-spacing:1px;color:#8fa6bb;margin-bottom:7px}select,input,button{font:inherit}select,input{width:100%;padding:14px;background:#07111c;color:#fff;border:1px solid #31506a;border-radius:8px}select{cursor:pointer}button{cursor:pointer;padding:11px 14px;border-radius:7px;border:1px solid #326b9f;background:#0b2944;color:#9bd2ff;font-weight:bold}button:hover{filter:brightness(1.2)}.details{background:#07111c;border:1px solid #20364d;border-radius:9px;padding:17px;margin-top:15px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.stat{background:#0b1724;border:1px solid #20364d;border-radius:8px;padding:13px}.stat small{display:block;color:#8fa6bb;font-weight:bold}.value{font-size:24px;font-weight:bold;margin-top:4px}.fine{color:#48df87}.jail{color:#ff687d}.counter{display:grid;grid-template-columns:48px 1fr 48px;gap:7px;margin-top:9px}.counter button{padding:8px}.actions{display:grid;gap:8px;margin-top:15px}.copy{background:#2588ff;color:white}.chosen{background:#07111c;border:1px solid #20364d;border-radius:8px;padding:13px;margin:9px 0}.remove{float:right;padding:4px 9px;color:#ff8292;background:#1b0e13;border-color:#5a3039}.total{margin-top:15px}.error{border-color:#743642;background:#210f15;color:#ff9aa8}.success{border-color:#28684a;background:#0d2118;color:#8df0b4}.status{font-size:12px;font-weight:bold;margin-left:8px}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px}@media(max-width:780px){.grid{grid-template-columns:1fr}h1{font-size:34px}.stats{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:#050b12;color:#edf5fc;font-family:Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:28px 18px}.box{background:#0b1724;border:1px solid #25435e;border-radius:12px;padding:22px;margin-bottom:18px}h1{font-size:42px;margin:0 0 8px}h1 span{color:#65b6ff}.muted{color:#8fa6bb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin:14px 0}.field label{display:block;font-size:12px;font-weight:bold;letter-spacing:1px;color:#8fa6bb;margin-bottom:7px}select,input,button{font:inherit}select,input{width:100%;padding:14px;background:#07111c;color:#fff;border:1px solid #31506a;border-radius:8px}select{cursor:pointer}button{cursor:pointer;padding:11px 14px;border-radius:7px;border:1px solid #326b9f;background:#0b2944;color:#9bd2ff;font-weight:bold}button:hover{filter:brightness(1.2)}.details{background:#07111c;border:1px solid #20364d;border-radius:9px;padding:17px;margin-top:15px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.stat{background:#0b1724;border:1px solid #20364d;border-radius:8px;padding:13px}.stat small{display:block;color:#8fa6bb;font-weight:bold}.value{font-size:24px;font-weight:bold;margin-top:4px}.fine{color:#48df87}.jail{color:#ff687d}.counter{display:grid;grid-template-columns:48px 1fr 48px;gap:7px;margin-top:9px}.counter button{padding:8px}.actions{display:grid;gap:8px;margin-top:15px}.copy{background:#2588ff;color:white}.chosen{background:#07111c;border:1px solid #20364d;border-radius:8px;padding:13px;margin:9px 0}.remove{float:right;padding:4px 9px;color:#ff8292;background:#1b0e13;border-color:#5a3039}.total{margin-top:15px}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px}@media(max-width:780px){.grid{grid-template-columns:1fr}h1{font-size:34px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<section class="box">
-<div class="muted">ORFK // SUNRISE RP</div>
-<h1>BÜNTETÉS <span>KALKULÁTOR</span></h1>
-<p class="muted">A kalkulátor közvetlenül a központi <b>btk.json</b> adatbázisból dolgozik.</p>
-<div id="loadStatus" class="muted">BTK adatbázis betöltése...</div>
-</section>
+<section class="box"><div class="muted">ORFK // SUNRISE RP</div><h1>BÜNTETÉS <span>KALKULÁTOR</span></h1></section>
 <div class="grid">
-<section class="box">
-<h2>BTK-TÉTEL</h2>
-<div class="field"><label>VÁLASSZ EGY TÉTELT</label><select id="law" disabled><option value="">BTK adatbázis betöltése...</option></select></div>
-<div id="details"></div>
-</section>
-<aside class="box">
-<div class="topline"><h2 style="margin:0">INTÉZKEDÉS</h2><span id="count" class="muted status">0 TÉTEL</span></div>
-<div id="items"><p class="muted">Még nincs hozzáadott tétel.</p></div>
-<div id="totals"></div>
-</aside>
+<section class="box"><h2>BTK-TÉTEL</h2><div class="field"><label>VÁLASSZ EGY TÉTELT</label><select id="law"><option value="">Válassz egy BTK-tételt...</option></select></div><div id="details"></div></section>
+<aside class="box"><div class="topline"><h2 style="margin:0">INTÉZKEDÉS</h2><span id="count" class="muted">0 TÉTEL</span></div><div id="items"><p class="muted">Még nincs hozzáadott tétel.</p></div><div id="totals"></div></aside>
 </div>
 </main>
 <script>
@@ -35,89 +22,23 @@ const state={laws:[],items:[],selected:null};
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('hu-HU').format(Number(n)||0)+' Ft';
 const minutes=n=>{n=Math.max(0,Number(n)||0);const h=Math.floor(n/60),m=n%60;return h?`${h} óra${m?' '+m+' perc':''}`:`${m} perc`};
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
-function normalize(raw){
-  let data=raw;
-  // Accept the actual JSON and also the wrapped form returned by some GitHub integrations.
-  for(let i=0;i<3;i++){
-    if(data && typeof data.content==='string') data=data.content;
-    else if(typeof data==='string') data=JSON.parse(data);
-    else break;
-  }
-  if(typeof data==='string') data=JSON.parse(data);
-  if(Array.isArray(data)) return data;
-  if(data&&Array.isArray(data.items)) return data.items;
-  if(data&&data.data&&Array.isArray(data.data.items)) return data.data.items;
-  throw new Error('A btk.json formátuma nem megfelelő: items tömb nem található.');
-}
-async function getJson(url){
-  const r=await fetch(url,{cache:'no-store'});
-  if(!r.ok) throw new Error('HTTP '+r.status+' — '+url);
-  const text=await r.text();
-  if(!text.trim()) throw new Error('Üres válasz — '+url);
-  try{return JSON.parse(text)}catch(e){throw new Error('A btk.json nem érvényes JSON — '+url)}
-}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 async function load(){
-  const status=$('loadStatus');
-  const urls=[
-    './btk.json?v='+Date.now(),
-    'btk.json?v='+Date.now(),
-    'https://raw.githubusercontent.com/JaniPD/orfk-weboldal/main/btk.json?v='+Date.now()
-  ];
-  let lastError=null;
-  for(const url of urls){
-    try{
-      const raw=await getJson(url);
-      const laws=normalize(raw);
-      if(!laws.length) throw new Error('A betöltött BTK adatbázis üres.');
-      state.laws=laws.map((x,i)=>({...x,_index:i,fine:Number(x.fine)||0,jail:Number(x.jail)||0}));
-      const select=$('law');
-      select.innerHTML='<option value="">— VÁLASSZ EGY BTK-TÉTELT —</option>';
-      state.laws.forEach((x,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`${x.para||'§?'} — ${x.name||'Névtelen tétel'}`;select.appendChild(o)});
-      select.disabled=false;
-      status.className='success status';
-      status.textContent=`✓ ${state.laws.length} BTK-TÉTEL BETÖLTVE`;
-      return;
-    }catch(err){lastError=err;console.warn('BTK forrás sikertelen:',url,err)}
-  }
-  console.error('BTK betöltési hiba:',lastError);
-  $('law').innerHTML='<option value="">— NEM SIKERÜLT BETÖLTENI —</option>';
-  $('details').innerHTML=`<div class="details error"><b>Nem sikerült betölteni a BTK adatbázist.</b><p>${escapeHtml(lastError?.message||'Ismeretlen hiba')}</p><small>A kalkulátor több forrásból próbálja betölteni a btk.json fájlt. Ha ezt látod, a böngésző vagy a GitHub Pages nem éri el a JSON fájlt.</small></div>`;
-  status.className='error status';status.textContent='✕ BTK BETÖLTÉSI HIBA';
+ try{
+  const r=await fetch('./btk.json',{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  let data=await r.json();
+  if(data&&typeof data.content==='string')data=JSON.parse(data.content);
+  const laws=Array.isArray(data)?data:data.items;
+  if(!Array.isArray(laws)||!laws.length)throw new Error('Nincs BTK adat.');
+  state.laws=laws.map(x=>({para:x.para||'',name:x.name||'',desc:x.desc||'',fine:Number(x.fine)||0,jail:Number(x.jail)||0}));
+  const s=$('law');s.innerHTML='<option value="">Válassz egy BTK-tételt...</option>';
+  state.laws.forEach((x,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${x.para} — ${x.name}`;s.appendChild(o)});
+ }catch(e){$('law').innerHTML='<option value="">A tételek nem tölthetők be</option>';console.error(e)}
 }
-$('law').addEventListener('change',()=>{
-  const value=$('law').value;
-  if(value===''){state.selected=null;$('details').innerHTML='';return}
-  const x=state.laws[Number(value)];
-  if(!x)return;
-  state.selected=x;
-  $('details').innerHTML=`<div class="details"><b>${escapeHtml(x.para)} — ${escapeHtml(x.name)}</b><p class="muted">${escapeHtml(x.desc||'')}</p><div class="stats"><div class="stat"><small>EGYSÉGBÍRSÁG</small><div class="value fine">${money(x.fine)}</div></div><div class="stat"><small>EGYSÉGBÜNTETÉS</small><div class="value jail">${minutes(x.jail)}</div></div></div><div class="field"><label>TÉTELEK SZÁMA</label><div class="counter"><button type="button" id="minus">−</button><input id="qty" type="number" min="1" step="1" value="1"><button type="button" id="plus">+</button></div></div><button id="add" style="width:100%">＋ HOZZÁADÁS AZ INTÉZKEDÉSHEZ</button></div>`;
-  $('minus').onclick=()=>{$('qty').value=Math.max(1,(Number($('qty').value)||1)-1)};
-  $('plus').onclick=()=>{$('qty').value=Math.max(1,(Number($('qty').value)||1)+1)};
-  $('add').onclick=addSelected;
-});
-function addSelected(){
-  if(!state.selected)return;
-  const qty=Math.max(1,Math.floor(Number($('qty').value)||1));
-  const existing=state.items.find(i=>i.law.para===state.selected.para);
-  if(existing)existing.qty+=qty;else state.items.push({law:state.selected,qty});
-  render();
-}
-function render(){
-  $('count').textContent=`${state.items.length} TÉTEL`;
-  if(!state.items.length){$('items').innerHTML='<p class="muted">Még nincs hozzáadott tétel.</p>';$('totals').innerHTML='';return;}
-  let totalFine=0,totalJail=0;
-  $('items').innerHTML=state.items.map((item,index)=>{const f=item.law.fine*item.qty,j=item.law.jail*item.qty;totalFine+=f;totalJail+=j;return `<div class="chosen"><button class="remove" type="button" data-remove="${index}">×</button><b>${escapeHtml(item.law.para)} — ${escapeHtml(item.law.name)}</b><br><small>×${item.qty} • ${money(f)} • ${minutes(j)}</small></div>`}).join('');
-  document.querySelectorAll('[data-remove]').forEach(btn=>btn.onclick=()=>{state.items.splice(Number(btn.dataset.remove),1);render()});
-  $('totals').innerHTML=`<div class="details total"><div class="stats"><div class="stat"><small>ÖSSZES BÍRSÁG</small><div class="value fine">${money(totalFine)}</div></div><div class="stat"><small>ÖSSZES BÖRTÖN</small><div class="value jail">${minutes(totalJail)}</div></div></div><div class="actions"><button class="copy" id="copy">📋 MÁSOLÁS RP-BE</button><button id="clear">INTÉZKEDÉS TÖRLÉSE</button></div></div>`;
-  $('copy').onclick=copyRP;$('clear').onclick=()=>{state.items=[];render()};
-}
-async function copyRP(){
-  let totalFine=0,totalJail=0;
-  const lines=state.items.map(item=>{const f=item.law.fine*item.qty,j=item.law.jail*item.qty;totalFine+=f;totalJail+=j;return `${item.law.para} – ${item.law.name} | ${item.qty} db | ${money(f)} | ${minutes(j)}`});
-  const text=`[ORFK | SUNRISE RP]\nBÜNTETÉSI INTÉZKEDÉS\n\n${lines.join('\n')}\n--------------------\nÖSSZES BÍRSÁG: ${money(totalFine)}\nÖSSZES BÖRTÖN: ${minutes(totalJail)}`;
-  try{await navigator.clipboard.writeText(text);alert('Az intézkedés kimásolva a vágólapra!')}catch(e){window.prompt('A böngésző nem engedte a közvetlen másolást. CTRL+C után OK:',text)}
-}
+$('law').onchange=function(){const i=this.value;if(i===''){state.selected=null;$('details').innerHTML='';return}const x=state.laws[Number(i)];state.selected=x;$('details').innerHTML=`<div class="details"><b>${esc(x.para)} — ${esc(x.name)}</b><p class="muted">${esc(x.desc)}</p><div class="stats"><div class="stat"><small>EGYSÉGBÍRSÁG</small><div class="value fine">${money(x.fine)}</div></div><div class="stat"><small>EGYSÉGBÜNTETÉS</small><div class="value jail">${minutes(x.jail)}</div></div></div><div class="field"><label>TÉTELEK SZÁMA</label><div class="counter"><button type="button" id="minus">−</button><input id="qty" type="number" min="1" value="1"><button type="button" id="plus">+</button></div></div><button type="button" id="add" style="width:100%">＋ HOZZÁADÁS AZ INTÉZKEDÉSHEZ</button></div>`;$('minus').onclick=()=>{$('qty').value=Math.max(1,(+$('qty').value||1)-1)};$('plus').onclick=()=>{$('qty').value=Math.max(1,(+$('qty').value||1)+1)};$('add').onclick=add};
+function add(){if(!state.selected)return;const q=Math.max(1,Math.floor(+$('qty').value||1));const old=state.items.find(i=>i.law.para===state.selected.para);old?old.qty+=q:state.items.push({law:state.selected,qty:q});render()}
+function render(){let f=0,j=0;$('count').textContent=state.items.length+' TÉTEL';if(!state.items.length){$('items').innerHTML='<p class="muted">Még nincs hozzáadott tétel.</p>';$('totals').innerHTML='';return}$('items').innerHTML=state.items.map((x,i)=>{const a=x.law.fine*x.qty,b=x.law.jail*x.qty;f+=a;j+=b;return `<div class="chosen"><button class="remove" data-i="${i}">×</button><b>${esc(x.law.para)} — ${esc(x.law.name)}</b><br><small>×${x.qty} • ${money(a)} • ${minutes(b)}</small></div>`}).join('');document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{state.items.splice(+b.dataset.i,1);render()});$('totals').innerHTML=`<div class="details total"><div class="stats"><div class="stat"><small>ÖSSZES BÍRSÁG</small><div class="value fine">${money(f)}</div></div><div class="stat"><small>ÖSSZES BÖRTÖN</small><div class="value jail">${minutes(j)}</div></div></div><div class="actions"><button class="copy" id="copy">📋 MÁSOLÁS RP-BE</button><button id="clear">INTÉZKEDÉS TÖRLÉSE</button></div></div>`;$('copy').onclick=async()=>{const lines=state.items.map(x=>`${x.law.para} – ${x.law.name} | ${x.qty} db | ${money(x.law.fine*x.qty)} | ${minutes(x.law.jail*x.qty)}`);const t=`[ORFK | SUNRISE RP]\nBÜNTETÉSI INTÉZKEDÉS\n\n${lines.join('\n')}\n--------------------\nÖSSZES BÍRSÁG: ${money(f)}\nÖSSZES BÖRTÖN: ${minutes(j)}`;try{await navigator.clipboard.writeText(t);$('copy').textContent='✓ MÁSOLVA'}catch(e){prompt('Másold ki az alábbi szöveget:',t)}};$('clear').onclick=()=>{state.items=[];render()}}
 load();
 </script>
 </body>
