@@ -7,8 +7,8 @@
     <style>
         :root {
             --bg-dark: #030712;
-            --card-bg: rgba(15, 23, 42, 0.65);
-            --card-border: rgba(59, 130, 246, 0.25);
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --card-border: rgba(59, 130, 246, 0.3);
             --accent-blue: #3b82f6;
             --accent-cyan: #06b6d4;
             --accent-gold: #f59e0b;
@@ -36,8 +36,8 @@
             line-height: 1.7;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
@@ -86,7 +86,6 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        /* Hero - Extra Széles & Szellős */
         .hero {
             text-align: center;
             padding: 10rem 5vw 8rem 5vw;
@@ -162,7 +161,6 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* FULL WIDTH CONTAINER (100% Szélesség, Maximális Margókkal) */
         .container {
             width: 100%;
             padding: 0 4vw;
@@ -179,7 +177,6 @@
         .section-header h2 { font-size: 3rem; font-weight: 800; letter-spacing: -0.5px; }
         .section-header p { color: var(--text-muted); margin-top: 0.8rem; font-size: 1.2rem; }
 
-        /* GRID ELRENDEZÉSEK - DYNAMIC FULL WIDTH */
         .grid-4 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -196,7 +193,6 @@
             .grid-2-wide { grid-template-columns: 1fr; }
         }
 
-        /* LARGE PANEL BOX */
         .panel-box {
             background: rgba(15, 23, 42, 0.55);
             border: 1px solid var(--card-border);
@@ -220,7 +216,6 @@
             gap: 15px;
         }
 
-        /* CARDS & ITEMS */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -257,7 +252,7 @@
         .rank-title { font-weight: 800; font-size: 1.2rem; color: #fff; }
         .rank-desc { font-size: 1rem; color: var(--text-muted); margin-top: 6px; }
 
-        /* BTK KALKULÁTOR - ULTRA WIDE LAYOUT */
+        /* BTK KALKULÁTOR EXTENDED */
         .calc-box {
             background: rgba(15, 23, 42, 0.75);
             border: 1px solid var(--card-border);
@@ -301,6 +296,19 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
 
+        .calc-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            background-color: var(--bg-dark);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 1rem;
+        }
+        .calc-input:focus { border-color: var(--accent-blue); }
+
         .calc-select {
             width: 100%;
             padding: 1.2rem;
@@ -315,6 +323,33 @@
         .calc-select:focus {
             border-color: var(--accent-blue);
             box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .modifier-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+
+        .mod-btn {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mod-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
         .selected-list {
@@ -424,7 +459,6 @@
             justify-content: flex-end;
         }
 
-        /* GYIK SZEKCIÓ */
         .faq-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -510,10 +544,8 @@
         </div>
     </div>
 
-    <!-- FULL WIDTH KONTÉNER -->
     <div class="container">
 
-        <!-- SZEKCIÓ 1: RÓLUNK & SZABÁLYZAT (SZÉLES KÉTPANEL) -->
         <section id="about">
             <div class="grid-2-wide">
                 <div class="panel-box">
@@ -554,7 +586,6 @@
             </div>
         </section>
 
-        <!-- SZEKCIÓ 2: ALOSZTÁLYOK (4 OSZLOPOS SZÉLES RÁCS) -->
         <section id="divisions">
             <div class="section-header">
                 <h2>🛡️ Specializálódj Alosztályainkban</h2>
@@ -584,7 +615,6 @@
             </div>
         </section>
 
-        <!-- SZEKCIÓ 3: RANGLÉTRA -->
         <section id="ranks">
             <div class="panel-box">
                 <div class="panel-header" style="text-align: center;">
@@ -612,7 +642,6 @@
             </div>
         </section>
 
-        <!-- SZEKCIÓ 4: BTK KALKULÁTOR (ULTRA WIDE 2 OSZLOP) -->
         <section id="calculator">
             <div class="section-header">
                 <h2>Interaktív BTK Kalkulátor</h2>
@@ -629,6 +658,8 @@
                             <button class="preset-btn" onclick="addPreset('§5.11 Bankrablás')">+ Bankrablás</button>
                             <button class="preset-btn" onclick="addPreset('§4.9 Emberrablás')">+ Emberrablás</button>
                         </div>
+
+                        <input type="text" id="searchBtk" class="calc-input" placeholder="🔍 Keress a vádak között (pl. menekülés, rablás)..." onkeyup="filterOptions()">
 
                         <select id="btkSelect" class="calc-select" onchange="addBtkItem(this)">
                             <option value="" disabled selected>-- Válassz a TELJES BTK listából --</option>
@@ -674,6 +705,12 @@
                                 <option value="§5.11 Bankrablás" data-fine="450000" data-jail="40">§5.11 Bankrablás - 450.000 Ft | 40 perc</option>
                             </optgroup>
                         </select>
+
+                        <div class="modifier-container">
+                            <button class="mod-btn" onclick="setModifier(0.75, this)">-25% Enyhítés</button>
+                            <button class="mod-btn active" onclick="setModifier(1, this)">Alapértelmezett</button>
+                            <button class="mod-btn" onclick="setModifier(1.5, this)">+50% Súlyosbítás</button>
+                        </div>
                     </div>
 
                     <div>
@@ -701,7 +738,6 @@
             </div>
         </section>
 
-        <!-- SZEKCIÓ 5: GYIK -->
         <section id="faq">
             <div class="section-header">
                 <h2>Gyakran Ismételt Kérdések</h2>
@@ -724,7 +760,6 @@
             </div>
         </section>
 
-        <!-- SZEKCIÓ 6: TOBORZÁS CALL TO ACTION -->
         <section id="apply">
             <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%); padding: 6rem 3rem; border-radius: 32px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.4); backdrop-filter: blur(12px); box-shadow: 0 15px 50px rgba(0,0,0,0.5);">
                 <h2 style="font-size: 3.2rem; margin-bottom: 1.2rem;">Készen állsz a szolgálatra?</h2>
@@ -741,6 +776,7 @@
 
     <script>
         let selectedItems = [];
+        let currentMultiplier = 1;
 
         function addBtkItem(select) {
             const option = select.options[select.selectedIndex];
@@ -766,6 +802,28 @@
                     selectedItems.push({ id: Date.now() + Math.random(), name: valName, fine, jail });
                     renderSelected();
                     break;
+                }
+            }
+        }
+
+        function setModifier(multiplier, btn) {
+            currentMultiplier = multiplier;
+            document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSelected();
+        }
+
+        function filterOptions() {
+            const filter = document.getElementById('searchBtk').value.toLowerCase();
+            const select = document.getElementById('btkSelect');
+            const options = select.getElementsByTagName('option');
+
+            for (let i = 0; i < options.length; i++) {
+                const txtValue = options[i].textContent || options[i].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1 || options[i].value === "") {
+                    options[i].style.display = "";
+                } else {
+                    options[i].style.display = "none";
                 }
             }
         }
@@ -808,14 +866,17 @@
             let totalJail = 0;
 
             selectedItems.forEach(item => {
-                totalFine += item.fine;
-                totalJail += item.jail;
+                const calcFine = Math.round(item.fine * currentMultiplier);
+                const calcJail = Math.round(item.jail * currentMultiplier);
+
+                totalFine += calcFine;
+                totalJail += calcJail;
 
                 const div = document.createElement('div');
                 div.className = 'selected-item';
                 div.id = `item-${item.id}`;
                 div.innerHTML = `
-                    <span><strong>${item.name}</strong> - ${item.fine.toLocaleString()} Ft | ${item.jail} perc</span>
+                    <span><strong>${item.name}</strong> - ${calcFine.toLocaleString()} Ft | ${calcJail} perc</span>
                     <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
                 `;
                 listContainer.appendChild(div);
@@ -855,12 +916,16 @@
             let fine = 0, jail = 0;
 
             selectedItems.forEach(i => {
-                text += `- ${i.name} (${i.fine.toLocaleString()} Ft / ${i.jail} perc)\n`;
-                fine += i.fine;
-                jail += i.jail;
+                const calcFine = Math.round(i.fine * currentMultiplier);
+                const calcJail = Math.round(i.jail * currentMultiplier);
+                text += `- ${i.name} (${calcFine.toLocaleString()} Ft / ${calcJail} perc)\n`;
+                fine += calcFine;
+                jail += calcJail;
             });
 
-            text += `\nÖsszes bírság: ${fine.toLocaleString()} Ft\nÖsszes börtönidő: ${jail} perc`;
+            let modText = currentMultiplier === 0.75 ? " (-25% Enyhítés)" : currentMultiplier === 1.5 ? " (+50% Súlyosbítás)" : "";
+
+            text += `\nÖsszes bírság: ${fine.toLocaleString()} Ft\nÖsszes börtönidő: ${jail} perc${modText}`;
 
             navigator.clipboard.writeText(text).then(() => {
                 alert("A büntetési jegyzőkönyv másolva a vágólapra!");
