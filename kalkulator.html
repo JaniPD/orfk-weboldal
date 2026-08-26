@@ -19,7 +19,7 @@
 <div class="grid">
 <section class="box">
 <h2>BTK-TÉTEL</h2>
-<div class="field"><label>VÁLASSZ EGY TÉTELT</label><select id="law"><option value="">Betöltés...</option></select></div>
+<div class="field"><label>VÁLASSZ EGY TÉTELT</label><select id="law" disabled><option value="">BTK adatbázis betöltése...</option></select></div>
 <div id="details"></div>
 </section>
 <aside class="box">
@@ -37,35 +37,53 @@ const money=n=>new Intl.NumberFormat('hu-HU').format(Number(n)||0)+' Ft';
 const minutes=n=>{n=Math.max(0,Number(n)||0);const h=Math.floor(n/60),m=n%60;return h?`${h} óra${m?' '+m+' perc':''}`:`${m} perc`};
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
 function normalize(raw){
-  // The current btk.json is wrapped by the GitHub file writer as {content:"..."}.
-  // Unwrap that string first, then accept the actual {items:[...]} structure.
   let data=raw;
-  if(data && typeof data.content==='string') data=data.content;
+  // Accept the actual JSON and also the wrapped form returned by some GitHub integrations.
+  for(let i=0;i<3;i++){
+    if(data && typeof data.content==='string') data=data.content;
+    else if(typeof data==='string') data=JSON.parse(data);
+    else break;
+  }
   if(typeof data==='string') data=JSON.parse(data);
   if(Array.isArray(data)) return data;
   if(data&&Array.isArray(data.items)) return data.items;
   if(data&&data.data&&Array.isArray(data.data.items)) return data.data.items;
-  throw new Error('A btk.json nem tartalmaz érvényes items tömböt.');
+  throw new Error('A btk.json formátuma nem megfelelő: items tömb nem található.');
+}
+async function getJson(url){
+  const r=await fetch(url,{cache:'no-store'});
+  if(!r.ok) throw new Error('HTTP '+r.status+' — '+url);
+  const text=await r.text();
+  if(!text.trim()) throw new Error('Üres válasz — '+url);
+  try{return JSON.parse(text)}catch(e){throw new Error('A btk.json nem érvényes JSON — '+url)}
 }
 async function load(){
   const status=$('loadStatus');
-  try{
-    const response=await fetch('./btk.json?v='+Date.now(),{cache:'no-store'});
-    if(!response.ok) throw new Error('HTTP '+response.status);
-    const raw=await response.json();
-    state.laws=normalize(raw).map((x,i)=>({...x,_index:i,fine:Number(x.fine)||0,jail:Number(x.jail)||0}));
-    if(!state.laws.length) throw new Error('Üres BTK adatbázis.');
-    const select=$('law');
-    select.innerHTML='<option value="">— VÁLASSZ EGY BTK-TÉTELT —</option>';
-    state.laws.forEach((x,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`${x.para||'§?'} — ${x.name||'Névtelen tétel'}`;select.appendChild(o)});
-    status.className='success status';
-    status.textContent=`✓ ${state.laws.length} BTK-TÉTEL BETÖLTVE`;
-  }catch(err){
-    console.error('BTK betöltési hiba:',err);
-    $('law').innerHTML='<option value="">— NEM SIKERÜLT BETÖLTENI —</option>';
-    $('details').innerHTML=`<div class="details error"><b>Nem sikerült betölteni a BTK adatbázist.</b><p>${escapeHtml(err.message)}</p><small>Ellenőrizd, hogy a kalkulator.html és a btk.json ugyanabban a GitHub Pages könyvtárban vannak-e.</small></div>`;
-    status.className='error status';status.textContent='✕ BTK BETÖLTÉSI HIBA';
+  const urls=[
+    './btk.json?v='+Date.now(),
+    'btk.json?v='+Date.now(),
+    'https://raw.githubusercontent.com/JaniPD/orfk-weboldal/main/btk.json?v='+Date.now()
+  ];
+  let lastError=null;
+  for(const url of urls){
+    try{
+      const raw=await getJson(url);
+      const laws=normalize(raw);
+      if(!laws.length) throw new Error('A betöltött BTK adatbázis üres.');
+      state.laws=laws.map((x,i)=>({...x,_index:i,fine:Number(x.fine)||0,jail:Number(x.jail)||0}));
+      const select=$('law');
+      select.innerHTML='<option value="">— VÁLASSZ EGY BTK-TÉTELT —</option>';
+      state.laws.forEach((x,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`${x.para||'§?'} — ${x.name||'Névtelen tétel'}`;select.appendChild(o)});
+      select.disabled=false;
+      status.className='success status';
+      status.textContent=`✓ ${state.laws.length} BTK-TÉTEL BETÖLTVE`;
+      return;
+    }catch(err){lastError=err;console.warn('BTK forrás sikertelen:',url,err)}
   }
+  console.error('BTK betöltési hiba:',lastError);
+  $('law').innerHTML='<option value="">— NEM SIKERÜLT BETÖLTENI —</option>';
+  $('details').innerHTML=`<div class="details error"><b>Nem sikerült betölteni a BTK adatbázist.</b><p>${escapeHtml(lastError?.message||'Ismeretlen hiba')}</p><small>A kalkulátor több forrásból próbálja betölteni a btk.json fájlt. Ha ezt látod, a böngésző vagy a GitHub Pages nem éri el a JSON fájlt.</small></div>`;
+  status.className='error status';status.textContent='✕ BTK BETÖLTÉSI HIBA';
 }
 $('law').addEventListener('change',()=>{
   const value=$('law').value;
@@ -81,7 +99,7 @@ $('law').addEventListener('change',()=>{
 function addSelected(){
   if(!state.selected)return;
   const qty=Math.max(1,Math.floor(Number($('qty').value)||1));
-  const existing=state.items.find(i=>i.para===state.selected.para);
+  const existing=state.items.find(i=>i.law.para===state.selected.para);
   if(existing)existing.qty+=qty;else state.items.push({law:state.selected,qty});
   render();
 }
