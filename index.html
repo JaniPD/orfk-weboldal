@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORFK // CYBER-HUD TERMINAL v3.0</title>
+    <title>ORFK // CYBER-HUD TERMINAL v3.5</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
 
@@ -68,11 +68,11 @@
         /* LAYOUT GRID */
         .hud-container {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 420px;
             gap: 20px;
             padding: 20px;
             flex: 1;
-            max-width: 1700px;
+            max-width: 1800px;
             margin: 0 auto;
             width: 100%;
         }
@@ -130,6 +130,14 @@
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
 
+        .cat-bar {
+            padding: 10px 12px;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-line);
+        }
+
         .cat-btn {
             background: rgba(0, 240, 255, 0.05);
             border: 1px solid var(--border-line);
@@ -138,6 +146,7 @@
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
+            white-space: nowrap;
             transition: all 0.2s;
         }
 
@@ -154,7 +163,7 @@
             gap: 12px;
             padding: 15px;
             overflow-y: auto;
-            max-height: calc(100vh - 230px);
+            max-height: calc(100vh - 250px);
         }
 
         .cyber-card {
@@ -164,7 +173,6 @@
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
-            overflow: hidden;
         }
 
         .cyber-card:hover {
@@ -181,7 +189,7 @@
         }
 
         .card-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 8px;
@@ -203,6 +211,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            max-height: calc(100vh - 320px);
         }
 
         .docket-card {
@@ -218,6 +227,7 @@
             background: rgba(0, 0, 0, 0.8);
             border-top: 1px solid var(--border-line);
             padding: 15px;
+            margin-top: auto;
         }
 
         .sum-item {
@@ -256,10 +266,10 @@
 
     <div class="hud-banner">
         <div class="hud-logo">
-            <span>//</span> ORFK_TAC_HUD v3.0
+            <span>//</span> ORFK_TAC_HUD v3.5
         </div>
         <div style="font-size: 0.85rem; color: var(--text-dim);">
-            SYSTEM STATUS: <span style="color: var(--neon-cyan);">ONLINE</span>
+            DATABASE: <span style="color: var(--neon-cyan);">FULL BTK LOADED</span>
         </div>
     </div>
 
@@ -268,18 +278,20 @@
         <div class="hud-panel">
             <div class="panel-head">
                 <span>BTK MÁTRIX ADATBÁZIS</span>
+                <span id="counter" style="color: var(--text-dim);">0 tétel</span>
             </div>
             
             <div class="controls-bar">
                 <input type="text" id="hudSearch" class="hud-input" placeholder="> VÁDPONT VAGY KÓD KERESÉSE..." oninput="renderCards()">
             </div>
 
-            <div style="padding: 10px 12px 0 12px; display: flex; gap: 6px; overflow-x: auto;">
+            <div class="cat-bar">
                 <button class="cat-btn active" onclick="setCat('ALL', this)">ÖSSZES</button>
                 <button class="cat-btn" onclick="setCat('KÖZLEKEDÉS', this)">KÖZLEKEDÉS</button>
                 <button class="cat-btn" onclick="setCat('HATÓSÁG', this)">HATÓSÁG</button>
                 <button class="cat-btn" onclick="setCat('KÖZREND', this)">KÖZREND</button>
-                <button class="cat-btn" onclick="setCat('SZEMÉLY', this)">SZEMÉLY/VAGYON</button>
+                <button class="cat-btn" onclick="setCat('SZEMÉLY/VAGYON', this)">SZEMÉLY & VAGYON</button>
+                <button class="cat-btn" onclick="setCat('ILLEGÁLIS', this)">ILLEGÁLIS TÁRGYAK</button>
             </div>
 
             <div class="cards-grid" id="cardsGrid"></div>
@@ -312,16 +324,50 @@
 
     <script>
         const btkData = [
+            // KÖZLEKEDÉS
             { code: "§1.1", title: "Tilosban parkolás", fine: 30000, jail: 0, cat: "KÖZLEKEDÉS" },
-            { code: "§1.3", title: "Súlyos sebességtúllépás", fine: 90000, jail: 0, cat: "KÖZLEKEDÉS" },
-            { code: "§1.20", title: "Menekülés járművel", fine: 150000, jail: 20, cat: "KÖZLEKEDÉS" },
-            { code: "§2.1", title: "Intézkedés akadályozása", fine: 80000, jail: 10, cat: "HATÓSÁG" },
-            { code: "§2.6", title: "Hivatalos személy elleni erőszak", fine: 200000, jail: 30, cat: "HATÓSÁG" },
-            { code: "§3.1", title: "Garázdaság", fine: 120000, jail: 15, cat: "KÖZREND" },
-            { code: "§3.6", title: "Illegális fegyverbirtoklás", fine: 350000, jail: 40, cat: "KÖZREND" },
-            { code: "§3.9", title: "Kábítószer kereskedelem", fine: 300000, jail: 35, cat: "KÖZREND" },
-            { code: "§4.7", title: "Emberölés", fine: 500000, jail: 60, cat: "SZEMÉLY" },
-            { code: "§4.9", title: "Emberrablás", fine: 450000, jail: 50, cat: "SZEMÉLY" }
+            { code: "§1.2", title: "Sebességtúllépás (Csekély)", fine: 50000, jail: 0, cat: "KÖZLEKEDÉS" },
+            { code: "§1.3", title: "Sebességtúllépás (Súlyos)", fine: 100000, jail: 0, cat: "KÖZLEKEDÉS" },
+            { code: "§1.4", title: "Veszélyes vezetés / Garázdaság járművel", fine: 120000, jail: 10, cat: "KÖZLEKEDÉS" },
+            { code: "§1.5", title: "Ittas / Bódult vezetés", fine: 150000, jail: 15, cat: "KÖZLEKEDÉS" },
+            { code: "§1.6", title: "Jogosítvány nélküli vezetés", fine: 80000, jail: 0, cat: "KÖZLEKEDÉS" },
+            { code: "§1.7", title: "Cserbenhagyás / Cserbenhagyásos gázolás", fine: 200000, jail: 30, cat: "KÖZLEKEDÉS" },
+            { code: "§1.8", title: "Menekülés járőrkocsi elől (Járművel)", fine: 250000, jail: 35, cat: "KÖZLEKEDÉS" },
+
+            // HATÓSÁG
+            { code: "§2.1", title: "Intézkedés megtagadása / Akadályozása", fine: 90000, jail: 15, cat: "HATÓSÁG" },
+            { code: "§2.2", title: "Hatósági személy félrevezetése / Hamis tanúzás", fine: 110000, jail: 20, cat: "HATÓSÁG" },
+            { code: "§2.3", title: "Rendőri utasítás figyelmen kívül hagyása", fine: 60000, jail: 10, cat: "HATÓSÁG" },
+            { code: "§2.4", title: "Rendőri egyenruha / Jelvény bitorlása", fine: 180000, jail: 25, cat: "HATÓSÁG" },
+            { code: "§2.5", title: "Verbalis fenyegetés hivatalos személy ellen", fine: 150000, jail: 20, cat: "HATÓSÁG" },
+            { code: "§2.6", title: "Hivatalos személy elleni erőszak", fine: 300000, jail: 45, cat: "HATÓSÁG" },
+            { code: "§2.7", title: "Vesztegetés / Korrupciós kísérlet", fine: 200000, jail: 30, cat: "HATÓSÁG" },
+
+            // KÖZREND
+            { code: "§3.1", title: "Garázdaság / Rendbontás", fine: 100000, jail: 15, cat: "KÖZREND" },
+            { code: "§3.2", title: "Csendháborítás / Közösségellenes magatartás", fine: 40000, jail: 0, cat: "KÖZREND" },
+            { code: "§3.3", title: "Rendőri hívószám / Sürgősségi vonal visszaélése", fine: 120000, jail: 10, cat: "KÖZREND" },
+            { code: "§3.4", title: "Tiltott tüntetés / Zendülés", fine: 150000, jail: 25, cat: "KÖZREND" },
+            { code: "§3.5", title: "Rendőri kordon / Lezárt terület megsértése", fine: 80000, jail: 10, cat: "KÖZREND" },
+
+            // SZEMÉLY/VAGYON
+            { code: "§4.1", title: "Lopás (Kisebb értékre)", fine: 70000, jail: 10, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.2", title: "Lopás (Nagy értékre)", fine: 150000, jail: 20, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.3", title: "Rablás / Fegyveres rablás", fine: 300000, jail: 40, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.4", title: "Rongálás / Magántulajdon megsemmisítése", fine: 90000, jail: 15, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.5", title: "Könnyű testi sértés", fine: 120000, jail: 20, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.6", title: "Súlyos testi sértés", fine: 250000, jail: 35, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.7", title: "Emberölés / Gyilkosság", fine: 500000, jail: 60, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.8", title: "Emberrablás / Tuszszedés", fine: 450000, jail: 50, cat: "SZEMÉLY/VAGYON" },
+            { code: "§4.9", title: "Bankrablás / Széfborítás", fine: 500000, jail: 60, cat: "SZEMÉLY/VAGYON" },
+
+            // ILLEGÁLIS TÁRGYAK
+            { code: "§5.1", title: "Illegális bırtoklás (Csekély mennyiségű kábítószer)", fine: 100000, jail: 15, cat: "ILLEGÁLIS" },
+            { code: "§5.2", title: "Kábítószer kereskedelem / Terjesztés", fine: 350000, jail: 40, cat: "ILLEGÁLIS" },
+            { code: "§5.3", title: "Illegális fegyverbirtoklás (Maroklőfegyver)", fine: 200000, jail: 30, cat: "ILLEGÁLIS" },
+            { code: "§5.4", title: "Illegális fegyverbirtoklás (Gépkarabély / Automata)", fine: 400000, jail: 50, cat: "ILLEGÁLIS" },
+            { code: "§5.5", title: "Fegyverkereskedelem", fine: 500000, jail: 60, cat: "ILLEGÁLIS" },
+            { code: "§5.6", title: "Tiltott robbanóanyag / Gránát birtoklása", fine: 450000, jail: 55, cat: "ILLEGÁLIS" }
         ];
 
         let activeCat = 'ALL';
@@ -339,11 +385,15 @@
             const grid = document.getElementById('cardsGrid');
             grid.innerHTML = '';
 
-            btkData.filter(item => {
+            const filtered = btkData.filter(item => {
                 const matchCat = activeCat === 'ALL' || item.cat === activeCat;
                 const matchSearch = item.title.toLowerCase().includes(query) || item.code.toLowerCase().includes(query);
                 return matchCat && matchSearch;
-            }).forEach(item => {
+            });
+
+            document.getElementById('counter').innerText = `${filtered.length} tétel`;
+
+            filtered.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'cyber-card';
                 card.onclick = () => addDocket(item);
