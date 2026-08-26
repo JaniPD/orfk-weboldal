@@ -36,8 +36,8 @@
             line-height: 1.6;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
             background-attachment: fixed;
         }
 
@@ -63,30 +63,58 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: transform 0.3s ease;
         }
 
-        .logo span { color: var(--accent-cyan); text-shadow: 0 0 12px rgba(6, 182, 212, 0.5); }
+        .logo:hover { transform: scale(1.02); }
+        .logo span { color: var(--accent-cyan); text-shadow: 0 0 12px rgba(6, 182, 212, 0.6); }
 
         nav a {
             color: var(--text-muted);
             text-decoration: none;
             margin-left: 1.8rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             font-size: 0.95rem;
+            display: inline-block;
         }
 
-        nav a:hover { color: var(--text-light); }
+        nav a:hover {
+            color: var(--text-light);
+            transform: translateY(-2px);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        }
 
+        /* Hero Effektek */
         .hero {
             text-align: center;
-            padding: 6rem 1.5rem 4rem 1.5rem;
+            padding: 7rem 1.5rem 5rem 1.5rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
+            filter: blur(50px);
+            z-index: -1;
+            animation: pulseGlow 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
         }
 
         .hero-badge {
-            background: rgba(37, 99, 235, 0.1);
+            background: rgba(37, 99, 235, 0.12);
             color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.4);
             padding: 0.4rem 1.2rem;
             border-radius: 30px;
             font-size: 0.85rem;
@@ -95,6 +123,7 @@
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
         }
 
         .hero h1 {
@@ -129,17 +158,19 @@
             cursor: pointer;
             text-decoration: none;
             font-weight: 700;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-size: 0.95rem;
             box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.6);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
         }
 
         .btn-secondary {
@@ -149,7 +180,11 @@
             box-shadow: none;
         }
 
-        .btn-secondary:hover { background: #1e293b; }
+        .btn-secondary:hover {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
 
         .container {
             max-width: 1100px;
@@ -175,20 +210,23 @@
             border: 1px solid var(--card-border);
             padding: 2rem 1.6rem;
             border-radius: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(59, 130, 246, 0.4);
-            background: rgba(15, 23, 42, 0.8);
+            transform: translateY(-6px);
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(15, 23, 42, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(37, 99, 235, 0.2);
         }
 
-        .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .card-icon { font-size: 2rem; margin-bottom: 1rem; transition: transform 0.3s ease; }
+        .card:hover .card-icon { transform: scale(1.15) rotate(5deg); }
         .card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
         .card p { color: var(--text-muted); font-size: 0.9rem; }
 
-        /* Kalkulátor */
+        /* Kalkulátor Stílusok & Animációk */
         .calc-box {
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid var(--card-border);
@@ -197,6 +235,7 @@
             max-width: 850px;
             margin: 0 auto;
             backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
         .search-box {
@@ -209,8 +248,12 @@
             margin-bottom: 1rem;
             outline: none;
             font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
-        .search-box:focus { border-color: var(--accent-blue); }
+        .search-box:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+        }
 
         .calc-select {
             width: 100%;
@@ -221,6 +264,11 @@
             color: white;
             font-size: 0.95rem;
             outline: none;
+            transition: all 0.3s ease;
+        }
+        .calc-select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
         }
 
         .selected-list {
@@ -236,47 +284,92 @@
             font-style: italic;
             text-align: center;
             font-size: 0.9rem;
-            padding: 1rem;
+            padding: 1.2rem;
             border: 1px dashed var(--card-border);
             border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
+        /* Kiválasztott tétel animációja */
         .selected-item {
-            background: rgba(7, 10, 18, 0.6);
+            background: rgba(7, 10, 18, 0.7);
             border: 1px solid var(--card-border);
             padding: 0.75rem 1rem;
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.9rem;
+            animation: slideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: all 0.3s ease;
+        }
+
+        .selected-item:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateX(4px);
+        }
+
+        .selected-item.removing {
+            animation: slideOut 0.3s forwards cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes slideOut {
+            from { opacity: 1; transform: scale(1); max-height: 50px; margin-bottom: 0.5rem; }
+            to { opacity: 0; transform: scale(0.9) translateY(10px); max-height: 0; padding: 0; margin-bottom: 0; border: none; }
         }
 
         .remove-btn {
             background: rgba(239, 68, 68, 0.15);
             color: #f87171;
-            border: none;
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 6px;
             padding: 0.3rem 0.6rem;
             cursor: pointer;
             font-size: 0.8rem;
+            transition: all 0.2s ease;
         }
-        .remove-btn:hover { background: rgba(239, 68, 68, 0.3); }
+        .remove-btn:hover {
+            background: rgba(239, 68, 68, 0.35);
+            transform: scale(1.1);
+        }
 
         .summary-box {
             margin-top: 1.5rem;
             padding: 1.5rem;
-            background: rgba(7, 10, 18, 0.5);
+            background: rgba(7, 10, 18, 0.6);
             border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 12px;
             display: flex;
             justify-content: space-around;
             text-align: center;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
-        .stat-value { font-size: 1.6rem; font-weight: 800; display: block; }
-        .val-fine { color: #4ade80; }
-        .val-jail { color: #f87171; }
+        .stat-value {
+            font-size: 1.7rem;
+            font-weight: 800;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        /* Érték megváltozásának animálása */
+        .stat-value.pulse {
+            animation: valuePulse 0.3s ease-out;
+        }
+
+        @keyframes valuePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); color: #ffffff; }
+            100% { transform: scale(1); }
+        }
+
+        .val-fine { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
+        .val-jail { color: #f87171; text-shadow: 0 0 10px rgba(248, 113, 113, 0.3); }
 
         .calc-actions {
             display: flex;
@@ -292,7 +385,10 @@
             border-radius: 12px;
             margin-bottom: 0.8rem;
             overflow: hidden;
+            transition: border-color 0.3s ease;
         }
+
+        .faq-item:hover { border-color: rgba(59, 130, 246, 0.4); }
 
         .faq-question {
             padding: 1.2rem;
@@ -301,15 +397,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            user-select: none;
+        }
+
+        .faq-question span {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
         }
 
         .faq-answer {
-            padding: 0 1.2rem 1.2rem 1.2rem;
+            padding: 0 1.2rem;
+            max-height: 0;
+            overflow: hidden;
             color: var(--text-muted);
             font-size: 0.95rem;
-            display: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.2rem 1.2rem 1.2rem;
+            max-height: 200px;
+            opacity: 1;
             border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 1rem;
+        }
+
+        .faq-item.active .faq-question span {
+            transform: rotate(45deg);
+            color: var(--accent-cyan);
         }
 
         footer {
@@ -561,7 +677,7 @@
 
         <!-- Toborzás gomb szekció -->
         <section id="apply">
-            <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.8) 100%); padding: 3.5rem 2rem; border-radius: 20px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <div style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.8) 100%); padding: 3.5rem 2rem; border-radius: 20px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.3); backdrop-filter: blur(10px);">
                 <h2 style="font-size: 2rem; margin-bottom: 1rem;">Készen állsz a szolgálatra?</h2>
                 <p style="color: var(--text-muted); max-width: 550px; margin: 0 auto 2rem auto;">Töltsd ki a jelentkezési lapot, és csatlakozz hozzánk még ma!</p>
                 <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" class="btn">Jelentkezési Lap Megnyitása ↗</a>
@@ -591,13 +707,28 @@
         }
 
         function removeItem(id) {
-            selectedItems = selectedItems.filter(item => item.id !== id);
-            renderSelected();
+            const el = document.getElementById(`item-${id}`);
+            if (el) {
+                // Törlési animáció indítása
+                el.classList.add('removing');
+                setTimeout(() => {
+                    selectedItems = selectedItems.filter(item => item.id !== id);
+                    renderSelected();
+                }, 280);
+            }
         }
 
         function clearAllItems() {
-            selectedItems = [];
-            renderSelected();
+            const listContainer = document.getElementById('selectedList');
+            const items = listContainer.querySelectorAll('.selected-item');
+            
+            if (items.length === 0) return;
+
+            items.forEach(el => el.classList.add('removing'));
+            setTimeout(() => {
+                selectedItems = [];
+                renderSelected();
+            }, 280);
         }
 
         function renderSelected() {
@@ -606,8 +737,7 @@
 
             if (selectedItems.length === 0) {
                 listContainer.innerHTML = '<div class="selected-list-empty">Még nincs kiválasztva tétel...</div>';
-                document.getElementById('totalFine').innerText = '0 Ft';
-                document.getElementById('totalJail').innerText = '0 perc';
+                updateTotals(0, 0);
                 return;
             }
 
@@ -620,6 +750,7 @@
 
                 const div = document.createElement('div');
                 div.className = 'selected-item';
+                div.id = `item-${item.id}`;
                 div.innerHTML = `
                     <span><strong>${item.name}</strong> - ${item.fine.toLocaleString()} Ft | ${item.jail} perc</span>
                     <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
@@ -627,11 +758,32 @@
                 listContainer.appendChild(div);
             });
 
-            document.getElementById('totalFine').innerText = totalFine.toLocaleString() + ' Ft';
-            document.getElementById('totalJail').innerText = totalJail + ' perc';
+            updateTotals(totalFine, totalJail);
         }
 
-        /* JAVÍTOTT Kereső szűrő az optgroup-ok kezelésére */
+        /* Összegek frissítése animációval */
+        function updateTotals(fine, jail) {
+            const fineEl = document.getElementById('totalFine');
+            const jailEl = document.getElementById('totalJail');
+
+            if (fineEl.innerText !== fine.toLocaleString() + ' Ft') {
+                fineEl.innerText = fine.toLocaleString() + ' Ft';
+                triggerPulse(fineEl);
+            }
+
+            if (jailEl.innerText !== jail + ' perc') {
+                jailEl.innerText = jail + ' perc';
+                triggerPulse(jailEl);
+            }
+        }
+
+        function triggerPulse(element) {
+            element.classList.remove('pulse');
+            void element.offsetWidth; // DOM reflow újraindításhoz
+            element.classList.add('pulse');
+        }
+
+        /* Kereső szűrő */
         function filterOptions() {
             const input = document.getElementById('calcSearch').value.toLowerCase().trim();
             const select = document.getElementById('btkSelect');
@@ -651,11 +803,11 @@
                     }
                 }
 
-                // Csoport elrejtése, ha nincs benne találat
                 groups[i].style.display = hasVisible ? "" : "none";
             }
         }
 
+        /* Másolási funkció */
         function copyReport() {
             if (selectedItems.length === 0) {
                 alert("Nincs kiválasztva semmilyen tétel!");
@@ -678,16 +830,10 @@
             });
         }
 
+        /* GYIK Harmonika Animáció */
         function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const span = element.querySelector('span');
-            if (answer.style.display === "block") {
-                answer.style.display = "none";
-                span.innerText = "+";
-            } else {
-                answer.style.display = "block";
-                span.innerText = "-";
-            }
+            const item = element.parentElement;
+            item.classList.toggle('active');
         }
     </script>
 </body>
