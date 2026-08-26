@@ -91,7 +91,7 @@
         /* Hero */
         .hero {
             text-align: center;
-            padding: 8rem 1.5rem 6rem 1.5rem;
+            padding: 6rem 1.5rem 4rem 1.5rem;
             position: relative;
         }
 
@@ -117,7 +117,7 @@
         }
 
         .hero h1 {
-            font-size: 3.8rem;
+            font-size: 3.5rem;
             margin-bottom: 1.2rem;
             font-weight: 900;
             background: linear-gradient(135deg, #ffffff 40%, #93c5fd 100%);
@@ -174,101 +174,126 @@
         }
 
         .container {
-            max-width: 1150px;
+            max-width: 1300px;
             margin: 0 auto 5rem auto;
             padding: 0 1.5rem;
         }
 
-        section { margin-bottom: 5.5rem; }
+        section { margin-bottom: 4rem; }
 
         .section-title {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .section-title h2 { font-size: 2.2rem; font-weight: 800; }
         .section-title p { color: var(--text-muted); margin-top: 0.4rem; }
 
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        /* MULTI-PANEL ELRENDEZÉS (EGYESÍTETT DUPLA ÉS DUPLA OSZLOPOS RÁCS) */
+        .panels-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
 
-        /* Kártyák Glow Effecttel */
+        @media (max-width: 600px) {
+            .panels-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel-box {
+            background: rgba(13, 22, 41, 0.65);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .panel-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .panel-header h2 {
+            font-size: 1.6rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-header p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        /* Belső Rácsok a Paneleken Belül */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+        .grid-1 { display: flex; flex-direction: column; gap: 1rem; }
+
+        /* Kártyák */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 2rem 1.6rem;
-            border-radius: 16px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
+            padding: 1.4rem;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            height: 100%;
         }
 
         .card:hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: translateY(-4px);
             border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
-        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; transition: transform 0.4s ease; }
-        .card:hover .card-icon { transform: scale(1.2) rotate(6deg); }
-        .card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-        .card p { color: var(--text-muted); font-size: 0.9rem; }
+        .card-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+        .card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+        .card p { color: var(--text-muted); font-size: 0.85rem; }
 
-        /* Ranglétra Panel */
-        .ranks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 1.2rem;
-        }
-
+        /* Rang Kártyák */
         .rank-card {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--card-border);
             border-left: 4px solid var(--accent-blue);
-            padding: 1.2rem;
+            padding: 1rem;
             border-radius: 10px;
             transition: all 0.3s ease;
         }
         .rank-card:hover {
             border-left-color: var(--accent-gold);
-            transform: translateX(5px);
+            transform: translateX(4px);
             background: rgba(15, 23, 42, 0.9);
         }
-        .rank-title { font-weight: 800; font-size: 1.05rem; color: #fff; }
-        .rank-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+        .rank-title { font-weight: 800; font-size: 0.95rem; color: #fff; }
+        .rank-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* ÚJ PANEL: Szabályzat kártyák */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
+        /* Szabályzat Kártyák */
         .rule-card {
             background: rgba(13, 22, 41, 0.8);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.2rem;
         }
         .rule-card h3 {
             color: var(--accent-cyan);
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1rem;
+            margin-bottom: 0.6rem;
         }
-        .rule-card ul {
-            list-style: none;
-            padding: 0;
-        }
+        .rule-card ul { list-style: none; padding: 0; }
         .rule-card li {
             color: var(--text-muted);
-            font-size: 0.88rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.83rem;
+            margin-bottom: 0.4rem;
             position: relative;
-            padding-left: 1.2rem;
+            padding-left: 1rem;
         }
         .rule-card li::before {
             content: "•";
@@ -278,27 +303,24 @@
             left: 0;
         }
 
-        /* ÚJ PANEL: Körzetek / Zónák */
+        /* Körzetek Kártyák */
         .zone-card {
             background: linear-gradient(145deg, rgba(13, 22, 41, 0.9), rgba(5, 8, 17, 0.9));
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.2rem;
             transition: all 0.3s ease;
         }
-        .zone-card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-4px);
-        }
+        .zone-card:hover { border-color: var(--accent-cyan); }
         .zone-badge {
             background: rgba(6, 182, 212, 0.15);
             color: var(--accent-cyan);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
             font-weight: 700;
             display: inline-block;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
         /* BTK Kalkulátor */
@@ -307,7 +329,7 @@
             border: 1px solid var(--card-border);
             padding: 2.2rem;
             border-radius: 20px;
-            max-width: 880px;
+            max-width: 900px;
             margin: 0 auto;
             backdrop-filter: blur(16px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
@@ -370,7 +392,6 @@
             border-radius: 12px;
         }
 
-        /* Rugalmas Beúszás Animáció */
         .selected-item {
             background: rgba(7, 10, 18, 0.8);
             border: 1px solid var(--card-border);
@@ -440,9 +461,7 @@
             transition: transform 0.2s ease;
         }
 
-        .stat-value.pulse {
-            animation: valueBounce 0.35s ease-out;
-        }
+        .stat-value.pulse { animation: valueBounce 0.35s ease-out; }
 
         @keyframes valueBounce {
             0% { transform: scale(1); }
@@ -548,147 +567,131 @@
 
     <div class="container">
 
-        <!-- Rólunk -->
-        <section id="about">
-            <div class="section-title">
-                <h2>Miért csatlakozz hozzánk?</h2>
-                <p>Nálunk a közösség és a minőségi Roleplay áll az első helyen.</p>
-            </div>
-            
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-icon">🚔</div>
-                    <h3>Pörgős Járőrszolgálat</h3>
-                    <p>Folyamatos akciók, igazoltatások, üldözések és reális rendőri intézkedések várnak mindennap.</p>
+        <!-- EGYESÍTETT PANEL-SOW 1: Rólunk + Szolgálati Szabályzat Egymás Mellett -->
+        <div class="panels-row">
+            <!-- Panel 1.1: Miért Csatlakozz -->
+            <div class="panel-box" id="about">
+                <div class="panel-header">
+                    <h2>⭐ Miért csatlakozz hozzánk?</h2>
+                    <p>Nálunk a közösség és a minőségi Roleplay áll az első helyen.</p>
                 </div>
-                <div class="card">
-                    <div class="card-icon">📈</div>
-                    <h3>Karrierlehetőség</h3>
-                    <p>Rendszeres előléptetések az aktivitásod és a teljesítményed alapján. Lépj feljebb a ranglétrán!</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-icon">🚔</div>
+                        <h3>Pörgős Járőrszolgálat</h3>
+                        <p>Folyamatos akciók, igazoltatások, üldözések és reális rendőri intézkedések várnak mindennap.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📈</div>
+                        <h3>Karrierlehetőség</h3>
+                        <p>Rendszeres előléptetések az aktivitásod és a teljesítményed alapján.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <div class="card-icon">🤝</div>
-                    <h3>Támogató Közösség</h3>
-                    <p>Segítőkész vezetőség és baráti légkör. Ha kezdő vagy, megtanítunk mindenre az akadémián!</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ÚJ PANEL 1: Szolgálati Kódex & Alapszabályok -->
-        <section id="rules">
-            <div class="section-title">
-                <h2>Szolgálati Irányelvek</h2>
-                <p>A professzionális és etikus rendőri intézkedések alapszabályai.</p>
             </div>
 
-            <div class="rules-grid">
-                <div class="rule-card">
-                    <h3>📻 Rádióforgalmazási Etikett</h3>
-                    <ul>
-                        <li>Rövid, pontos és lényegretörő rádiózás (10-es kódok használata).</li>
-                        <li>Saját egység és pozíció megadása minden üldözésnél.</li>
-                        <li>Felesleges beszéd és beszólás szigorúan tilos az eljárások alatt.</li>
-                    </ul>
+            <!-- Panel 1.2: Szolgálati Irányelvek -->
+            <div class="panel-box" id="rules">
+                <div class="panel-header">
+                    <h2>📜 Szolgálati Irányelvek</h2>
+                    <p>A professzionális és etikus rendőri intézkedések alapszabályai.</p>
                 </div>
-                <div class="rule-card">
-                    <h3>🔫 Fegyverhasználati Protokoll</h3>
-                    <ul>
-                        <li>Fegyvertelen gyanúsítottal szemben csak kényszerítő eszköz alkalmazható.</li>
-                        <li>Éles fegyvert kizárólag közvetlen életveszély esetén szabad használni.</li>
-                        <li>Figyelmeztető lövés kötelező, ha a szituáció engedi.</li>
-                    </ul>
-                </div>
-                <div class="rule-card">
-                    <h3>⚖️ Intézkedési Kötelezettségek</h3>
-                    <ul>
-                        <li>Jogok ismertetése minden őrizetbe vételkor kötelező.</li>
-                        <li>BTK tételek pontos kiszabása (a kalkulátor alapján).</li>
-                        <li>Tisztelettudó és határozott fellépés a civil lakossággal szemben.</li>
-                    </ul>
+                <div class="grid-1">
+                    <div class="rule-card">
+                        <h3>📻 Rádióforgalmazási Etikett</h3>
+                        <ul>
+                            <li>Rövid, pontos és lényegretörő rádiózás (10-es kódok használata).</li>
+                            <li>Saját egység és pozíció megadása minden üldözésnél.</li>
+                        </ul>
+                    </div>
+                    <div class="rule-card">
+                        <h3>🔫 Fegyverhasználati Protokoll</h3>
+                        <ul>
+                            <li>Fegyvertelen gyanúsítottal szemben csak kényszerítő eszköz alkalmazható.</li>
+                            <li>Éles fegyvert kizárólag közvetlen életveszély esetén szabad használni.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Ranglétra Panel -->
-        <section id="ranks">
-            <div class="section-title">
-                <h2>Szolgálati Ranglétra</h2>
-                <p>Folyamatos fejlődési lehetőség a legkisebb fokozattól a vezetőségig.</p>
+        <!-- EGYESÍTETT PANEL-ROW 2: Ranglétra + Rendőri Körzetek Egymás Mellett -->
+        <div class="panels-row">
+            <!-- Panel 2.1: Szolgálati Ranglétra -->
+            <div class="panel-box" id="ranks">
+                <div class="panel-header">
+                    <h2>🎖️ Szolgálati Ranglétra</h2>
+                    <p>Folyamatos fejlődési lehetőség a legkisebb fokozattól a vezetőségig.</p>
+                </div>
+                <div class="grid-2">
+                    <div class="rank-card">
+                        <div class="rank-title">Kadét / Őrmester</div>
+                        <div class="rank-desc">Alapképzés, akadémia elvégzése és járőrszolgálat.</div>
+                    </div>
+                    <div class="rank-card">
+                        <div class="rank-title">Törzs- / Főtörzsőrmester</div>
+                        <div class="rank-desc">Tapasztalt járőr, önálló intézkedési jogkör.</div>
+                    </div>
+                    <div class="rank-card">
+                        <div class="rank-title">Zászlós / Főtörzszászlós</div>
+                        <div class="rank-desc">Alosztályi irányítás és kiskadétok betanítása.</div>
+                    </div>
+                    <div class="rank-card">
+                        <div class="rank-title">Tisztikar (Hadnagy+)</div>
+                        <div class="rank-desc">Akciók szervezése, frakcióvezetés.</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="ranks-grid">
-                <div class="rank-card">
-                    <div class="rank-title">Kadét / Őrmester</div>
-                    <div class="rank-desc">Alapképzés, akadémia elvégzése és a járőrszolgálat alapjainak elsajátítása.</div>
+            <!-- Panel 2.2: Rendőri Körzetek -->
+            <div class="panel-box" id="zones">
+                <div class="panel-header">
+                    <h2>🗺️ Rendőri Körzetek & Zónák</h2>
+                    <p>A város legfőbb övezetei és azok prioritási szintjei.</p>
                 </div>
-                <div class="rank-card">
-                    <div class="rank-title">Törzsőrmester - Főtörzsőrmester</div>
-                    <div class="rank-desc">Tapasztalt járőr, önálló intézkedési jogkör és alosztályi csatlakozás.</div>
-                </div>
-                <div class="rank-card">
-                    <div class="rank-title">Zászlós - Főtörzszászlós</div>
-                    <div class="rank-desc">Kiemelt feladatok ellátása, alosztályi irányítás és kiskadétok betanítása.</div>
-                </div>
-                <div class="rank-card">
-                    <div class="rank-title">Tisztikar (Hadnagy+)</div>
-                    <div class="rank-desc">Akciók szervezése, frakcióvezetés és a teljes szervezet felügyelete.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ÚJ PANEL 2: Rendőri Körzetek / Zónák -->
-        <section id="zones">
-            <div class="section-title">
-                <h2>Járőrövezetek & Felelősségi Területek</h2>
-                <p>A város legfőbb körzetei és azok prioritási szintjei.</p>
-            </div>
-
-            <div class="grid-3">
-                <div class="zone-card">
-                    <span class="zone-badge">Kiemelt Prioritás</span>
-                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🌆 Belváros & Banknegyed</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Sűrűn lakott terület, boltrablások és pénzintézeti riasztások fő helyszíne. Gyors reagálású járőröket igényel.</p>
-                </div>
-                <div class="zone-card">
-                    <span class="zone-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold);">Fokozott Ellenőrzés</span>
-                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🏭 Ipari & Kikötői Zóna</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Tiltott áruk és illegális tevékenységek felderítése. Nyomozati és BEU/TEK jelenlétre fókuszál.</p>
-                </div>
-                <div class="zone-card">
-                    <span class="zone-badge" style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue);">Közúti Ellenőrzés</span>
-                    <h3 style="margin-bottom: 0.5rem; color: #fff;">🛣️ Autópályák & Kivezető Utak</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Nagy sebességű elfogások, trafipax mérések és körözött járművek kiszűrése az államközi utakon.</p>
+                <div class="grid-1">
+                    <div class="zone-card">
+                        <span class="zone-badge">Kiemelt Prioritás</span>
+                        <h3 style="margin-bottom: 0.3rem; color: #fff;">🌆 Belváros & Banknegyed</h3>
+                        <p style="font-size: 0.83rem; color: var(--text-muted);">Sűrűn lakott terület, boltrablások és pénzintézeti riasztások fő helyszíne.</p>
+                    </div>
+                    <div class="zone-card">
+                        <span class="zone-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-gold);">Fokozott Ellenőrzés</span>
+                        <h3 style="margin-bottom: 0.3rem; color: #fff;">🏭 Ipari & Kikötői Zóna</h3>
+                        <p style="font-size: 0.83rem; color: var(--text-muted);">Tiltott áruk és illegális tevékenységek felderítése.</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Alosztályok szekció -->
+        <!-- Alosztályok szekció (4 oszlopos panel) -->
         <section id="divisions">
-            <div class="section-title">
-                <h2>Specializálódj Alosztályainkban</h2>
-                <p>Képezd magad tovább a rendőrségen belüli szakterületeken!</p>
-            </div>
+            <div class="panel-box">
+                <div class="panel-header" style="text-align: center;">
+                    <h2>🛡️ Specializálódj Alosztályainkban</h2>
+                    <p>Képezd magad tovább a rendőrségen belüli szakterületeken!</p>
+                </div>
 
-            <div class="grid-4">
-                <div class="card">
-                    <div class="card-icon">🕵️‍♂️</div>
-                    <h3>Nyomozati Osztály</h3>
-                    <p>Bűnügyi felderítések, titkos adatgyűjtések, megfigyelések és súlyos bűncselekmények kivizsgálása.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚔</div>
-                    <h3>Közrendészeti Osztály</h3>
-                    <p>A szervezet alappillére. Közterületi jelenlét, lakossági segítségnyújtás és a rend fenntartása.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚁</div>
-                    <h3>Légi Egység</h3>
-                    <p>Helikopteres járőrszolgálat, légi üldözések támogatása és gyors felderítés magasból.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3>TEK / Bevetési Egység</h3>
-                    <p>Különleges műveletek, túszdrámák, fegyveres rablások és nagy kockázatú akciók felszámolása.</p>
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <div class="card">
+                        <div class="card-icon">🕵️‍♂️</div>
+                        <h3>Nyomozati Osztály</h3>
+                        <p>Bűnügyi felderítések, titkos adatgyűjtések és megfigyelések.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚔</div>
+                        <h3>Közrendészeti Osztály</h3>
+                        <p>Közterületi jelenlét, lakossági segítségnyújtás és rendfenntartás.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚁</div>
+                        <h3>Légi Egység</h3>
+                        <p>Helikopteres járőrszolgálat és gyors felderítés magasból.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>TEK / Bevetési Egység</h3>
+                        <p>Különleges műveletek, túszdrámák és fegyveres rablások elhárítása.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -701,7 +704,6 @@
             </div>
 
             <div class="calc-box">
-                <!-- Gyorsgombok -->
                 <div class="preset-buttons">
                     <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-right: 4px;">Gyorsvádak:</span>
                     <button class="preset-btn" onclick="addPreset('§1.20 Rendőri intézkedés előli menekülés járművel')">+ Menekülés járművel</button>
