@@ -3,382 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORFK - Toborzó és Tájékoztató Portál</title>
+    <title>ORFK - Vezérlőközpont</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
         :root {
-            --bg-dark: #070913;
-            --card-bg: rgba(18, 24, 43, 0.65);
-            --card-border: rgba(99, 102, 241, 0.2);
-            --accent-blue: #3b82f6;
-            --accent-indigo: #6366f1;
+            --bg-color: #05070f;
+            --panel-bg: rgba(13, 18, 36, 0.75);
+            --panel-border: rgba(99, 102, 241, 0.18);
             --accent-cyan: #06b6d4;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
+            --accent-indigo: #6366f1;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #312e81; border-radius: 3px; }
-
-        html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.5;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* MOZGÓ HÁTTÉR ANIMÁCIÓ */
-        .animated-bg {
+        /* DINAMIKUS MOZGÓ HÁTTÉR */
+        .bg-glow {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
-                        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.12), transparent 40%),
-                        radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1), transparent 50%);
-            filter: blur(60px);
-            animation: moveBg 12s ease-in-out infinite alternate;
+            overflow: hidden;
         }
 
-        @keyframes moveBg {
-            0% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.1) translate(-2%, 2%); }
-            100% { transform: scale(1) translate(2%, -2%); }
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            animation: float 14s infinite ease-in-out alternate;
         }
 
+        .blob-1 {
+            top: -100px;
+            left: -100px;
+            background: #4f46e5;
+        }
+
+        .blob-2 {
+            bottom: -150px;
+            right: -100px;
+            background: #06b6d4;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 50px) scale(1.1); }
+            100% { transform: translate(-40px, 80px) scale(0.95); }
+        }
+
+        /* HEADER */
         header {
-            background: rgba(7, 9, 19, 0.75);
-            backdrop-filter: blur(16px);
-            padding: 0.8rem 5vw;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.2rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(5, 7, 15, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--panel-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .logo {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--text-light);
-            text-decoration: none;
-            letter-spacing: 0.5px;
+        .brand {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .logo span { color: var(--accent-cyan); }
-
-        nav { display: flex; gap: 1.5rem; }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        nav a:hover { color: var(--text-light); }
-
-        .hero {
-            text-align: center;
-            padding: 3.5rem 2vw 2rem 2vw;
-        }
-
-        .hero-badge {
-            background: rgba(99, 102, 241, 0.1);
-            color: #818cf8;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 0.25rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            line-height: 1.1;
-            margin-bottom: 0.6rem;
+            gap: 12px;
+            font-size: 1.2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+            letter-spacing: 0.5px;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 1.5rem auto;
-            font-size: 0.95rem;
-        }
-
-        .hero-buttons {
+        .nav-links {
             display: flex;
-            gap: 0.8rem;
-            justify-content: center;
+            gap: 2rem;
+            list-style: none;
         }
 
-        .btn {
-            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-blue));
-            color: white;
-            padding: 0.55rem 1.4rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+        .nav-links a {
+            color: var(--text-sub);
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.2s ease;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+            font-size: 0.9rem;
+            transition: color 0.2s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        .nav-links a:hover {
+            color: var(--text-main);
         }
 
-        .btn-secondary {
-            background: rgba(18, 24, 43, 0.8);
-            color: var(--text-light);
-            border: 1px solid var(--card-border);
-            box-shadow: none;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(30, 41, 59, 0.9);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .container {
+        /* MAIN DASHBOARD LAYOUT */
+        .dashboard-container {
+            max-width: 1300px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            margin: 2rem auto;
             padding: 0 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        section { margin-bottom: 2rem; }
-
-        .section-header {
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .section-header h2 { font-size: 1.5rem; font-weight: 700; }
-        .section-header p { color: var(--text-muted); margin-top: 0.2rem; font-size: 0.85rem; }
-
-        .grid-4 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
+            grid-template-columns: 1fr 380px;
+            gap: 1.5rem;
+            flex: 1;
         }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .glass-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        @media (max-width: 800px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
-
-        .panel-box {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            backdrop-filter: blur(12px);
-        }
-
-        .panel-header {
-            margin-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 0.4rem;
-        }
-
-        .panel-header h2 {
+        .panel-title {
             font-size: 1.1rem;
-            color: #fff;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.6rem;
         }
 
-        .card {
-            background: rgba(11, 15, 28, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .card:hover {
-            border-color: var(--accent-indigo);
-            transform: translateY(-2px);
-        }
-
-        .card-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
-        .card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
-        .card p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.4; }
-
-        /* ÚJ PANEL: STATISZTIKÁK */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .stat-card {
-            background: rgba(11, 15, 28, 0.5);
-            border: 1px solid var(--card-border);
-            padding: 1rem;
-            border-radius: 10px;
-        }
-
-        .stat-num {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ÚJ PANEL: HÍREK & KÖRÖZÉSEK */
-        .news-item {
+        /* KALKULÁTOR DESIGN */
+        .preset-row {
             display: flex;
-            gap: 1rem;
-            align-items: center;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .news-item:last-child { border-bottom: none; }
-        .news-tag {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-        .news-title { font-size: 0.85rem; font-weight: 600; }
-        .news-date { font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
-
-        .rank-card {
-            background: rgba(11, 15, 28, 0.5);
-            border: 1px solid var(--card-border);
-            border-left: 3px solid var(--accent-indigo);
-            padding: 0.8rem;
-            border-radius: 8px;
-        }
-        .rank-title { font-weight: 700; font-size: 0.88rem; color: #fff; }
-        .rank-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
-
-        /* TISZTA BTK KALKULÁTOR (KERESŐ NÉLKÜL) */
-        .calc-box {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 1.25rem;
-            border-radius: 12px;
-            backdrop-filter: blur(12px);
-        }
-
-        .calc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-        }
-
-        @media (max-width: 850px) {
-            .calc-grid { grid-template-columns: 1fr; }
-        }
-
-        .preset-buttons {
-            display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
         }
 
-        .preset-btn {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+        .btn-quick {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.25);
             color: #a5b4fc;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
-        .preset-btn:hover {
+        .btn-quick:hover {
             background: var(--accent-indigo);
             color: white;
+            transform: translateY(-1px);
         }
 
-        .calc-select {
+        .custom-select {
             width: 100%;
-            padding: 0.55rem 0.75rem;
-            border-radius: 6px;
-            border: 1px solid var(--card-border);
-            background-color: rgba(7, 9, 19, 0.9);
-            color: white;
-            font-size: 0.85rem;
+            padding: 0.75rem 1rem;
+            background: rgba(5, 7, 15, 0.8);
+            border: 1px solid var(--panel-border);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.9rem;
             outline: none;
+            margin-bottom: 1.2rem;
+            cursor: pointer;
         }
 
-        .modifier-container {
-            display: flex;
-            gap: 6px;
-            margin-top: 0.8rem;
+        .custom-select optgroup {
+            background: #0d1224;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .custom-select option {
+            background: #0d1224;
+            color: var(--text-main);
+        }
+
+        .mod-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 1.2rem;
         }
 
         .mod-btn {
-            flex: 1;
-            padding: 0.35rem;
-            background: rgba(11, 15, 28, 0.8);
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            border-radius: 6px;
-            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--panel-border);
+            color: var(--text-sub);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
+            transition: all 0.2s;
         }
 
         .mod-btn.active {
@@ -387,308 +237,330 @@
             border-color: var(--accent-indigo);
         }
 
-        .selected-list {
+        .selected-items-box {
+            background: rgba(5, 7, 15, 0.5);
+            border: 1px dashed var(--panel-border);
+            border-radius: 10px;
+            min-height: 140px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 0.8rem;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
-            min-height: 120px;
-            max-height: 180px;
-            overflow-y: auto;
-            padding-right: 4px;
+            gap: 8px;
         }
 
-        .selected-list-empty {
-            color: var(--text-muted);
-            font-style: italic;
+        .empty-state {
+            margin: auto;
+            color: var(--text-sub);
+            font-size: 0.85rem;
             text-align: center;
-            font-size: 0.8rem;
-            padding: 2rem 1rem;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
         }
 
-        .selected-item {
-            background: rgba(7, 9, 19, 0.8);
-            border: 1px solid var(--card-border);
-            padding: 0.45rem 0.75rem;
-            border-radius: 6px;
+        .item-row {
+            background: rgba(13, 18, 36, 0.9);
+            border: 1px solid var(--panel-border);
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
-        .remove-btn {
+        .btn-del {
             background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
+            color: var(--danger);
             border: none;
-            border-radius: 4px;
-            padding: 0.15rem 0.4rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: bold;
         }
 
-        .summary-box {
-            margin-top: 0.8rem;
-            padding: 0.8rem;
-            background: rgba(7, 9, 19, 0.9);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-around;
+        .calc-results {
+            margin-top: 1.2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            background: rgba(5, 7, 15, 0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--panel-border);
             text-align: center;
         }
 
-        .stat-value {
-            font-size: 1.3rem;
+        .res-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .res-val {
+            font-size: 1.4rem;
             font-weight: 800;
-            display: block;
+            margin-top: 2px;
         }
 
-        .val-fine { color: #4ade80; }
-        .val-jail { color: #f87171; }
+        .res-val.fine { color: var(--success); }
+        .res-val.jail { color: var(--danger); }
 
-        .calc-actions {
+        .action-row {
             display: flex;
-            gap: 8px;
-            margin-top: 0.8rem;
-            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 1.2rem;
         }
+
+        .btn-action {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-indigo), var(--accent-cyan));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-sub);
+            border: 1px solid var(--panel-border);
+        }
+
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-main); }
+
+        /* OLDALSÓ SÁV (RIGHT PANEL) */
+        .side-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: rgba(5, 7, 15, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-card-icon {
+            font-size: 1.4rem;
+            background: rgba(99, 102, 241, 0.1);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .mini-card-info h4 { font-size: 0.85rem; font-weight: 700; }
+        .mini-card-info p { font-size: 0.75rem; color: var(--text-sub); }
+
+        .apply-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid var(--accent-indigo);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .apply-box h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+        .apply-box p { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 1rem; }
 
         footer {
             text-align: center;
-            padding: 1.5rem 1rem;
-            background: rgba(7, 9, 19, 0.9);
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            color: var(--text-sub);
             font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
 
-    <div class="animated-bg"></div>
-
-    <header>
-        <a href="#" class="logo">🚔 ORFK | <span>SunRise RP</span></a>
-        <nav>
-            <a href="#stats">Statisztikák</a>
-            <a href="#divisions">Alosztályok</a>
-            <a href="#ranks">Rangok</a>
-            <a href="#calculator">BTK Kalkulátor</a>
-            <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" style="color: var(--accent-cyan);">Jelentkezés ↗</a>
-        </nav>
-    </header>
-
-    <div class="hero">
-        <span class="hero-badge">Hivatalos Rendvédelmi Portál</span>
-        <h1>Országos Rendőr-főkapitányság</h1>
-        <p>A rend, a biztonság és a hivatástudat otthona. Csatlakozz hozzánk és védd a várost!</p>
-        <div class="hero-buttons">
-            <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" class="btn">📝 Jelentkezési Lap</a>
-            <a href="#calculator" class="btn btn-secondary">⚡ BTK Kalkulátor</a>
-        </div>
+    <div class="bg-glow">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
     </div>
 
-    <div class="container">
+    <header>
+        <div class="brand">
+            🚔 <span class="brand-badge">ORFK VEZÉRLŐKÖZPONT</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#calculator">Kalkulátor</a></li>
+            <li><a href="#divisions">Alosztályok</a></li>
+            <li><a href="#ranks">Rangok</a></li>
+        </ul>
+    </header>
 
-        <!-- ÚJ PANEL: ELEMÉRZŐ STATISZTIKÁK -->
-        <section id="stats">
-            <div class="panel-box">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-num">42 Fő</span>
-                        <span class="stat-label">Aktív Állomány</span>
+    <div class="dashboard-container">
+        
+        <!-- BAL OLDAL: BTK KALKULÁTOR -->
+        <main class="glass-panel" id="calculator">
+            <div class="panel-title">
+                ⚡ BTK Büntetés-Kalkulátor
+            </div>
+
+            <!-- GYORSGOMBOK -->
+            <div class="preset-row">
+                <button class="btn-quick" onclick="addPreset('§1.20 Rendőri intézkedés előli menekülés járművel')">+ Járműves menekülés</button>
+                <button class="btn-quick" onclick="addPreset('§2.6 Hivatalos személy elleni erőszak')">+ Hivatalos személy elleni erőszak</button>
+                <button class="btn-quick" onclick="addPreset('§5.11 Bankrablás')">+ Bankrablás</button>
+                <button class="btn-quick" onclick="addPreset('§4.9 Emberrablás')">+ Emberrablás</button>
+            </div>
+
+            <!-- KATEGORIZÁLT VÁLASZTÓLISTA (KERESŐ NÉLKÜL) -->
+            <select id="btkSelect" class="custom-select" onchange="addBtkItem(this)">
+                <option value="" disabled selected>-- Válasszon vádpontot a listából --</option>
+                
+                <optgroup label="🚗 Közlekedési Szabálysértések">
+                    <option value="§1.1 Tilosban történő parkolás" data-fine="30000" data-jail="0">§1.1 Tilosban parkolás (30.000 Ft)</option>
+                    <option value="§1.4 Jogosítvány nélküli vezetés" data-fine="60000" data-jail="0">§1.4 Jogosítvány hiánya (60.000 Ft)</option>
+                    <option value="§1.16 Közúti veszélyeztetés" data-fine="150000" data-jail="20">§1.16 Közúti veszélyeztetés (150.000 Ft | 20p)</option>
+                    <option value="§1.20 Rendőri intézkedés előli menekülés járművel" data-fine="150000" data-jail="20">§1.20 Menekülés járművel (150.000 Ft | 20p)</option>
+                </optgroup>
+
+                <optgroup label="🏛️ Hatóság Elleni Bűncselekmények">
+                    <option value="§2.1 Rendőri intézkedés akadályozása" data-fine="80000" data-jail="10">§2.1 Intézkedés akadályozása (80.000 Ft | 10p)</option>
+                    <option value="§2.5 Hivatalos személy megsértése" data-fine="80000" data-jail="0">§2.5 Hiv. személy megsértése (80.000 Ft)</option>
+                    <option value="§2.6 Hivatalos személy elleni erőszak" data-fine="200000" data-jail="30">§2.6 Hiv. személy elleni erőszak (200.000 Ft | 30p)</option>
+                </optgroup>
+
+                <optgroup label="⚖️ Közrend Elleni Bűncselekmények">
+                    <option value="§3.1 Garázdaság" data-fine="120000" data-jail="15">§3.1 Garázdaság (120.000 Ft | 15p)</option>
+                    <option value="§3.8 Tiltott tárgy birtoklása" data-fine="150000" data-jail="20">§3.8 Tiltott tárgy birtoklása (150.000 Ft | 20p)</option>
+                    <option value="§3.11 Terrorcselekmény" data-fine="500000" data-jail="50">§3.11 Terrorcselekmény (500.000 Ft | 50p)</option>
+                </optgroup>
+
+                <optgroup label="💰 Személy és Vagyon Elleni">
+                    <option value="§4.4 Súlyos testi sértés" data-fine="150000" data-jail="20">§4.4 Súlyos testi sértés (150.000 Ft | 20p)</option>
+                    <option value="§4.9 Emberrablás" data-fine="450000" data-jail="50">§4.9 Emberrablás (450.000 Ft | 50p)</option>
+                    <option value="§5.3 Jármű eltulajdonítása" data-fine="250000" data-jail="35">§5.3 Járműlopás (250.000 Ft | 35p)</option>
+                    <option value="§5.11 Bankrablás" data-fine="450000" data-jail="40">§5.11 Bankrablás (450.000 Ft | 40p)</option>
+                </optgroup>
+            </select>
+
+            <!-- MODIFIKÁTOROK -->
+            <div class="mod-group">
+                <button class="mod-btn" onclick="setModifier(0.75, this)">-25% Enyhítés</button>
+                <button class="mod-btn active" onclick="setModifier(1, this)">Alapérték</button>
+                <button class="mod-btn" onclick="setModifier(1.5, this)">+50% Súlyosbítás</button>
+            </div>
+
+            <!-- KIVÁLASZTOTT TÉTELEK -->
+            <div id="selectedList" class="selected-items-box">
+                <div class="empty-state">Kattints a fenti gombokra vagy válassz a listából a hozzáadáshoz.</div>
+            </div>
+
+            <!-- ÖSSZESÍTŐ -->
+            <div class="calc-results">
+                <div>
+                    <div class="res-label">Pénzbírság</div>
+                    <div class="res-val fine" id="totalFine">0 Ft</div>
+                </div>
+                <div>
+                    <div class="res-label">Börtönbüntetés</div>
+                    <div class="res-val jail" id="totalJail">0 perc</div>
+                </div>
+            </div>
+
+            <div class="action-row">
+                <button class="btn-action btn-secondary" onclick="clearAllItems()">🗑️ Lista ürítése</button>
+                <button class="btn-action btn-primary" onclick="copyReport()">📋 Jegyzőkönyv Másolása</button>
+            </div>
+        </main>
+
+        <!-- JOBB OLDAL: STRUKTURÁLT ALOSZTÁLYOK ÉS RANGOK -->
+        <aside class="side-stack">
+            
+            <div class="glass-panel" id="divisions">
+                <div class="panel-title">🏢 Szervezeti Egységek</div>
+                
+                <div class="mini-card">
+                    <div class="mini-card-icon">🕵️</div>
+                    <div class="mini-card-info">
+                        <h4>Nyomozati Osztály</h4>
+                        <p>Bűnügyi felderítés és megfigyelés</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-num">1,280+</span>
-                        <span class="stat-label">Sikeres Elfogás</span>
+                </div>
+
+                <div class="mini-card">
+                    <div class="mini-card-icon">🚔</div>
+                    <div class="mini-card-info">
+                        <h4>Közrendészet</h4>
+                        <p>Járőrszolgálat és rendfenntartás</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-num">98%</span>
-                        <span class="stat-label">Ügyfelderítési Arány</span>
+                </div>
+
+                <div class="mini-card">
+                    <div class="mini-card-icon">🚁</div>
+                    <div class="mini-card-info">
+                        <h4>Légi Egység</h4>
+                        <p>Légi felderítés és támogatás</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-num">24/7</span>
-                        <span class="stat-label">Járőrszolgálat</span>
+                </div>
+
+                <div class="mini-card">
+                    <div class="mini-card-icon">🛡️</div>
+                    <div class="mini-card-info">
+                        <h4>TEK Bevetési Osztály</h4>
+                        <p>Kiemelt kockázatú akciók</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- ÚJ PANEL: HÍREK ÉS KÖRÖZÉSEK -->
-        <section>
-            <div class="grid-2">
-                <div class="panel-box">
-                    <div class="panel-header">
-                        <h2>📢 Kiemelt Felhívások</h2>
-                    </div>
-                    <div class="news-item">
-                        <span class="news-tag">KÖRÖZÉS</span>
-                        <div class="news-title">Fokozott ellenőrzés a belvárosi szektorban</div>
-                        <div class="news-date">Ma</div>
-                    </div>
-                    <div class="news-item">
-                        <span class="news-tag" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">TOBORZÁS</span>
-                        <div class="news-title">Új Kadét ciklus indul - Jelentkezz most!</div>
-                        <div class="news-date">Tegnap</div>
+            <div class="glass-panel" id="ranks">
+                <div class="panel-title">🎖️ Rangléptetés</div>
+                <div class="mini-card">
+                    <div class="mini-card-info">
+                        <h4>Kadét → Őrmester</h4>
+                        <p>Alapképzés és felügyelt járőrszolgálat</p>
                     </div>
                 </div>
-
-                <div class="panel-box">
-                    <div class="panel-header">
-                        <h2>📜 Szolgálati Alapelvek</h2>
+                <div class="mini-card">
+                    <div class="mini-card-info">
+                        <h4>Törzsőrmester → Zászlós</h4>
+                        <p>Önálló járőrszolgálat és alosztályi feladatok</p>
                     </div>
-                    <div class="news-item">
-                        <span class="news-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">RÁDIÓZÁS</span>
-                        <div class="news-title">Pontos kódok használata és egységmegjelölés kötelező.</div>
-                    </div>
-                    <div class="news-item">
-                        <span class="news-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">FEGYVER</span>
-                        <div class="news-title">Fokozatosság elve: sokkoló → éles fegyver (csak életveszélyben).</div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-info">
+                        <h4>Tisztikar (Hadnagy+)</h4>
+                        <p>Operatív vezetés és frakcióirányítás</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="divisions">
-            <div class="section-header">
-                <h2>Alosztályaink</h2>
-            </div>
-            <div class="grid-4">
-                <div class="card">
-                    <div class="card-icon">🕵️‍♂️</div>
-                    <h3>Nyomozati Osztály</h3>
-                    <p>Bűnügyi felderítések, megfigyelések és nyomozások.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚔</div>
-                    <h3>Közrendészet</h3>
-                    <p>Közterületi jelenlét, igazoltatások és rendfenntartás.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🚁</div>
-                    <h3>Légi Egység</h3>
-                    <p>Légi támogatás és gyors reagálású felderítés.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3>TEK / Bevetés</h3>
-                    <p>Nagy kockázatú akciók és túszdrámák felszámolása.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="ranks">
-            <div class="panel-box">
-                <div class="panel-header" style="text-align: center;">
-                    <h2>🎖️ Ranglétra</h2>
-                </div>
-                <div class="grid-4">
-                    <div class="rank-card">
-                        <div class="rank-title">Kadét / Őrmester</div>
-                        <div class="rank-desc">Alapképzés és felügyelt járőrözés.</div>
-                    </div>
-                    <div class="rank-card">
-                        <div class="rank-title">Törzs- / Főtörzsőrmester</div>
-                        <div class="rank-desc">Önálló intézkedési jogkör rendelkező járőr.</div>
-                    </div>
-                    <div class="rank-card">
-                        <div class="rank-title">Zászlós / Főtörzszászlós</div>
-                        <div class="rank-desc">Alosztályi irányítás és betanítás.</div>
-                    </div>
-                    <div class="rank-card">
-                        <div class="rank-title">Tisztikar (Hadnagy+)</div>
-                        <div class="rank-desc">Akciók felügyelete és frakcióvezetés.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- BTK KALKULÁTOR (KERESŐSÁV NÉLKÜL) -->
-        <section id="calculator">
-            <div class="section-header">
-                <h2>BTK Kalkulátor</h2>
-                <p>Gyors gombok és választólista a büntetések pontos kiszámításához.</p>
+            <div class="apply-box">
+                <h3>Csatlakozz az ORFK-hoz!</h3>
+                <p>Nyitott tagfelvétel állományunkba.</p>
+                <a href="https://docs.google.com/forms/d/1nLov5vL1XWCZG2YXXhAkTCDljCxmL1qvd-tL-gTBBMk" target="_blank" class="btn-action btn-primary" style="display: block; text-decoration: none;">Jelentkezési Lap ↗</a>
             </div>
 
-            <div class="calc-box">
-                <div class="calc-grid">
-                    <div>
-                        <div class="preset-buttons">
-                            <button class="preset-btn" onclick="addPreset('§1.20 Rendőri intézkedés előli menekülés járművel')">+ Menekülés</button>
-                            <button class="preset-btn" onclick="addPreset('§2.6 Hivatalos személy elleni erőszak')">+ Erőszak hiv. személy ellen</button>
-                            <button class="preset-btn" onclick="addPreset('§5.11 Bankrablás')">+ Bankrablás</button>
-                            <button class="preset-btn" onclick="addPreset('§4.9 Emberrablás')">+ Emberrablás</button>
-                        </div>
-
-                        <select id="btkSelect" class="calc-select" onchange="addBtkItem(this)">
-                            <option value="" disabled selected>-- Válassz vádat a listából --</option>
-                            
-                            <optgroup label="🚗 I. FEJEZET – KÖZLEKEDÉS">
-                                <option value="§1.1 Tilosban történő parkolás" data-fine="30000" data-jail="0">§1.1 Tilosban parkolás - 30.000 Ft | 0p</option>
-                                <option value="§1.4 Jogosítvány nélküli vezetés" data-fine="60000" data-jail="0">§1.4 Jogosítvány nélkül - 60.000 Ft | 0p</option>
-                                <option value="§1.16 Közúti veszélyeztetés" data-fine="150000" data-jail="20">§1.16 Közúti veszélyeztetés - 150.000 Ft | 20p</option>
-                                <option value="§1.20 Rendőri intézkedés előli menekülés járművel" data-fine="150000" data-jail="20">§1.20 Menekülés járművel - 150.000 Ft | 20p</option>
-                            </optgroup>
-
-                            <optgroup label="🏛️ II. FEJEZET – HATÓSÁG ELLENI">
-                                <option value="§2.1 Rendőri intézkedés akadályozása" data-fine="80000" data-jail="10">§2.1 Intézkedés akadályozása - 80.000 Ft | 10p</option>
-                                <option value="§2.5 Hivatalos személy megsértése" data-fine="80000" data-jail="0">§2.5 Hiv. személy megsértése - 80.000 Ft | 0p</option>
-                                <option value="§2.6 Hivatalos személy elleni erőszak" data-fine="200000" data-jail="30">§2.6 Hiv. személy elleni erőszak - 200.000 Ft | 30p</option>
-                            </optgroup>
-
-                            <optgroup label="⚖️ III. FEJEZET – KÖZREND ELLENI">
-                                <option value="§3.1 Garázdaság" data-fine="120000" data-jail="15">§3.1 Garázdaság - 120.000 Ft | 15p</option>
-                                <option value="§3.8 Tiltott tárgy birtoklása" data-fine="150000" data-jail="20">§3.8 Tiltott tárgy birtoklása - 150.000 Ft | 20p</option>
-                                <option value="§3.11 Terrorcselekmény" data-fine="500000" data-jail="50">§3.11 Terrorcselekmény - 500.000 Ft | 50p</option>
-                            </optgroup>
-
-                            <optgroup label="💰 IV. FEJEZET – SZEMÉLY ÉS VAGYON ELLENI">
-                                <option value="§4.4 Súlyos testi sértés" data-fine="150000" data-jail="20">§4.4 Súlyos testi sértés - 150.000 Ft | 20p</option>
-                                <option value="§4.9 Emberrablás" data-fine="450000" data-jail="50">§4.9 Emberrablás - 450.000 Ft | 50p</option>
-                                <option value="§5.3 Jármű eltulajdonítása" data-fine="250000" data-jail="35">§5.3 Járműlopás - 250.000 Ft | 35p</option>
-                                <option value="§5.11 Bankrablás" data-fine="450000" data-jail="40">§5.11 Bankrablás - 450.000 Ft | 40p</option>
-                            </optgroup>
-                        </select>
-
-                        <div class="modifier-container">
-                            <button class="mod-btn" onclick="setModifier(0.75, this)">-25% Enyhítés</button>
-                            <button class="mod-btn active" onclick="setModifier(1, this)">Alapértelmezett</button>
-                            <button class="mod-btn" onclick="setModifier(1.5, this)">+50% Súlyosbítás</button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div id="selectedList" class="selected-list">
-                            <div class="selected-list-empty">Nincs kiválasztva tétel...</div>
-                        </div>
-
-                        <div class="summary-box">
-                            <div>
-                                <span style="color: var(--text-muted); font-size: 0.7rem; font-weight: 700;">BÍRSÁG</span>
-                                <span class="stat-value val-fine" id="totalFine">0 Ft</span>
-                            </div>
-                            <div>
-                                <span style="color: var(--text-muted); font-size: 0.7rem; font-weight: 700;">BÖRTÖN</span>
-                                <span class="stat-value val-jail" id="totalJail">0 perc</span>
-                            </div>
-                        </div>
-
-                        <div class="calc-actions">
-                            <button class="btn btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;" onclick="clearAllItems()">🗑️ Törlés</button>
-                            <button class="btn" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;" onclick="copyReport()">📋 Másolás</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </aside>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 ORFK | SunRise RP - Minden jog fenntartva.</p>
+        &copy; 2026 ORFK Portál | SunRise RP
     </footer>
 
     <script>
@@ -745,7 +617,7 @@
             listContainer.innerHTML = '';
 
             if (selectedItems.length === 0) {
-                listContainer.innerHTML = '<div class="selected-list-empty">Nincs kiválasztva tétel...</div>';
+                listContainer.innerHTML = '<div class="empty-state">Kattints a fenti gombokra vagy válassz a listából a hozzáadáshoz.</div>';
                 updateTotals(0, 0);
                 return;
             }
@@ -761,10 +633,10 @@
                 totalJail += calcJail;
 
                 const div = document.createElement('div');
-                div.className = 'selected-item';
+                div.className = 'item-row';
                 div.innerHTML = `
-                    <span><strong>${item.name}</strong> - ${calcFine.toLocaleString()} Ft | ${calcJail}p</span>
-                    <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
+                    <span><strong>${item.name}</strong> (${calcFine.toLocaleString()} Ft | ${calcJail}p)</span>
+                    <button class="btn-del" onclick="removeItem(${item.id})">✕</button>
                 `;
                 listContainer.appendChild(div);
             });
@@ -779,7 +651,7 @@
 
         function copyReport() {
             if (selectedItems.length === 0) {
-                alert("Nincs kiválasztva semmilyen tétel!");
+                alert("Nincs kiválasztva egyetlen vádpont sem!");
                 return;
             }
 
@@ -798,7 +670,7 @@
             text += `\nÖsszes bírság: ${fine.toLocaleString()} Ft\nÖsszes börtönidő: ${jail} perc${modText}`;
 
             navigator.clipboard.writeText(text).then(() => {
-                alert("Jegyzőkönyv másolva a vágólapra!");
+                alert("Jegyzőkönyv sikeresen vágólapra másolva!");
             });
         }
     </script>
